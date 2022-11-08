@@ -1,0 +1,16 @@
+# Build
+bundles
+ts-out
+types
+
+# npm pack result
+/*.tgz
+
+# Dependencies
+node_modules
+
+# Misc
+.DS_Store
+._*
+.vscode
+*.log
