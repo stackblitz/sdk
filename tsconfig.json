@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "module": "esnext",
+    "moduleResolution": "node",
+    "target": "es2018",
+    "lib": ["es2018", "DOM"],
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "outDir": "./ts-out/",
+    "declaration": true,
+    "declarationDir": "./types/",
+    "emitDeclarationOnly": true,
+    "removeComments": false
+  },
+  "include": ["./src/"]
+}

@@ -1,0 +1,17 @@
+# Build
+bundles
+types
+
+# Dependencies
+node_modules
+
+# Tooling artifacts
+coverage
+ts-out
+
+# Misc
+._*
+.DS_Store
+.vscode
+*.log
+*.tgz
