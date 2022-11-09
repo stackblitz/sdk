@@ -22,15 +22,17 @@
     "README.md"
   ],
   "scripts": {
-    "build": "tsc && vite build",
-    "clean": "rimraf bundles ts-out types",
+    "build": "rimraf bundles ts-out types && tsc && vite build",
     "format": "prettier --write src tsconfig.json vite.config.ts",
-    "prepack": "npm run clean && npm run build"
+    "prepack": "npm test && npm run build",
+    "test": "vitest run"
   },
   "devDependencies": {
+    "@vitest/coverage-c8": "^0.25.1",
     "prettier": "^2.7.1",
     "rimraf": "^3.0.2",
     "typescript": "~4.4.4",
-    "vite": "^3.2.3"
+    "vite": "^3.2.3",
+    "vitest": "^0.25.1"
   }
 }

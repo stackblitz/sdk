@@ -1,16 +1,17 @@
 # Build
 bundles
-ts-out
 types
-
-# npm pack result
-/*.tgz
 
 # Dependencies
 node_modules
 
+# Tooling artifacts
+coverage
+ts-out
+
 # Misc
-.DS_Store
 ._*
+.DS_Store
 .vscode
 *.log
+*.tgz

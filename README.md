@@ -26,4 +26,13 @@ npm install
 
 # Generate the 'bundles' and 'types' folders
 npm run build
+
+# Run tests
+npm test
+
+# Run tests in watch mode
+npx vitest run
+
+# Run tests with coverage report
+npx vitest run --coverage
 ```

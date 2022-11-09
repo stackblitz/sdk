@@ -29,35 +29,36 @@ export function buildParams(options: Options = {}): string {
   return params.length ? `?${params.join('&')}` : '';
 }
 
-function trueParam(name: string, value?: boolean): string {
+export function trueParam(name: string, value?: boolean): string {
   if (value === true) {
     return `${name}=1`;
   }
   return '';
 }
 
-function booleanParam(name: string, value?: boolean): string {
+export function booleanParam(name: string, value?: boolean): string {
   if (typeof value === 'boolean') {
     return `${name}=${value ? '1' : '0'}`;
   }
   return '';
 }
 
-function percentParam(name: string, value?: number): string {
-  if (typeof value === 'number' && value >= 0 && value <= 100) {
-    return `${name}=${Math.round(value)}`;
+export function percentParam(name: string, value?: number): string {
+  if (typeof value === 'number' && !Number.isNaN(value)) {
+    const clamped = Math.min(100, Math.max(0, value));
+    return `${name}=${Math.round(clamped)}`;
   }
   return '';
 }
 
-function enumParam(name: string, oneOf: string[], value?: string) {
+export function enumParam(name: string, oneOf: string[], value?: string) {
   if (typeof value === 'string' && oneOf.includes(value)) {
     return `${name}=${value}`;
   }
   return '';
 }
 
-function stringParams(name: string, value?: string | string[]): string[] {
+export function stringParams(name: string, value?: string | string[]): string[] {
   const values = Array.isArray(value) ? value : [value];
   return values
     .filter((val) => typeof val === 'string' && val.trim() !== '')

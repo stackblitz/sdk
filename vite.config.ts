@@ -1,4 +1,4 @@
-import { defineConfig } from 'vite';
+import { defineConfig } from 'vitest/config';
 
 export default defineConfig({
   build: {
@@ -21,5 +21,10 @@ export default defineConfig({
         return `sdk${suffix}.js`;
       },
     },
+  },
+  test: {
+    globals: false,
+    include: ['**/src/**/*.spec.ts', '**/test/**/*.spec.ts'],
+    exclude: ['**/node_modules/**', '**/bundles/**', '**/types/**'],
   },
 });
