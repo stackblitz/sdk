@@ -1,19 +1,29 @@
 # StackBlitz SDK
 
-Wouldn't it be great if you could create StackBlitz projects on-demand from your docs, examples, blog posts?
+The StackBlitz JavaScript SDK lets you programmatically create StackBlitz projects to be opened in a new window or embedded in your docs, example pages, or blog posts.
 
-This is exactly what the StackBlitz SDK allows you to do. Even better, the SDK even gives you full control of the StackBlitz VM - allowing you to build rich & interactive experiences around your projects. 😮 🙌
+## Documentation
 
-The SDK is *3kB gzipped* and you can install it from npm:
+Check out our SDK documentation on developer.stackblitz.com:
+
+- [SDK overview](https://developer.stackblitz.com/platform/api/javascript-sdk)
+- [Options reference](https://developer.stackblitz.com/platform/api/javascript-sdk-options)
+- [Controlling embeds](https://developer.stackblitz.com/platform/api/javascript-sdk-vm)
+
+## Reporting issues
+
+- Issues with the SDK can be filed at https://github.com/stackblitz/sdk/issues
+
+- Other issues with StackBlitz can be filed at https://github.com/stackblitz/core/issues
+
+## Development
+
+We use `npm` and Node 16+.
 
 ```sh
-npm install @stackblitz/sdk
+# Install dependencies
+npm install
+
+# Generate the 'bundles' and 'types' folders
+npm run build
 ```
-
-Or add a script tag to the UMD build on jsDelivr/Unpkg — the SDK will be available on `window` as `StackBlitzSDK`:
-
-```html
-<script src="https://unpkg.com/@stackblitz/sdk/bundles/sdk.umd.js"></script>
-```
-
-**Learn more on [developer.stackblitz.com](https://developer.stackblitz.com/platform/api/javascript-sdk)**
