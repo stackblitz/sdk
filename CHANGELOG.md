@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- fix: changed the case of the URL query parameters for the `hideDevTools` and `devToolsHeight` options, for backwards compatibility with StackBlitz EE (https://github.com/stackblitz/sdk/pull/1)
 - chore: moved the SDK’s repository to https://github.com/stackblitz/sdk
 - chore: switched the SDK’s build tool from microbundle to Vite
 

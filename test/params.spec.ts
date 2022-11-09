@@ -11,52 +11,52 @@ import {
 
 describe('params formats', () => {
   test('trueParam accepts true only', () => {
-    expect(trueParam('test')).toBe('');
-    expect(trueParam('test', 1 as any)).toBe('');
-    expect(trueParam('test', false)).toBe('');
-    expect(trueParam('test', true)).toBe('test=1');
+    expect(trueParam('_test')).toBe('');
+    expect(trueParam('_test', 1 as any)).toBe('');
+    expect(trueParam('_test', false)).toBe('');
+    expect(trueParam('_test', true)).toBe('_test=1');
   });
 
   test('booleanParam accepts true and false', () => {
-    expect(booleanParam('test')).toBe('');
-    expect(booleanParam('test', 'yes' as any)).toBe('');
-    expect(booleanParam('test', false)).toBe('test=0');
-    expect(booleanParam('test', true)).toBe('test=1');
+    expect(booleanParam('_test')).toBe('');
+    expect(booleanParam('_test', 'yes' as any)).toBe('');
+    expect(booleanParam('_test', false)).toBe('_test=0');
+    expect(booleanParam('_test', true)).toBe('_test=1');
   });
 
   test('percentParam clamps and rounds number values', () => {
-    expect(percentParam('test')).toBe('');
-    expect(percentParam('test', '50%' as any)).toBe('');
-    expect(percentParam('test', 0 / 0)).toBe('');
+    expect(percentParam('_test')).toBe('');
+    expect(percentParam('_test', '50%' as any)).toBe('');
+    expect(percentParam('_test', 0 / 0)).toBe('');
     // It accepts integers
-    expect(percentParam('test', 0)).toBe('test=0');
-    expect(percentParam('test', 33)).toBe('test=33');
-    expect(percentParam('test', 100)).toBe('test=100');
+    expect(percentParam('_test', 0)).toBe('_test=0');
+    expect(percentParam('_test', 33)).toBe('_test=33');
+    expect(percentParam('_test', 100)).toBe('_test=100');
     // It rounds values
-    expect(percentParam('test', Math.PI)).toBe('test=3');
-    expect(percentParam('test', 49.5001)).toBe('test=50');
+    expect(percentParam('_test', Math.PI)).toBe('_test=3');
+    expect(percentParam('_test', 49.5001)).toBe('_test=50');
     // It clamps values
-    expect(percentParam('test', -50)).toBe('test=0');
-    expect(percentParam('test', 150)).toBe('test=100');
+    expect(percentParam('_test', -50)).toBe('_test=0');
+    expect(percentParam('_test', 150)).toBe('_test=100');
   });
 
   test('stringParams', () => {
-    expect(stringParams('test', '')).toStrictEqual([]);
-    expect(stringParams('test', 'hello')).toStrictEqual(['test=hello']);
-    expect(stringParams('test', 'a/../b?c&d')).toStrictEqual(['test=a%2F..%2Fb%3Fc%26d']);
-    expect(stringParams('test', ['hello', 'beautiful', 'world'])).toStrictEqual([
-      'test=hello',
-      'test=beautiful',
-      'test=world',
+    expect(stringParams('_test', '')).toStrictEqual([]);
+    expect(stringParams('_test', 'hello')).toStrictEqual(['_test=hello']);
+    expect(stringParams('_test', 'a/../b?c&d')).toStrictEqual(['_test=a%2F..%2Fb%3Fc%26d']);
+    expect(stringParams('_test', ['hello', 'beautiful', 'world'])).toStrictEqual([
+      '_test=hello',
+      '_test=beautiful',
+      '_test=world',
     ]);
   });
 
   test('enumParam drops invalid options', () => {
     const options = ['yes', 'no', 'maybe'];
-    expect(enumParam('test', options)).toBe('');
-    expect(enumParam('test', options, 'yes')).toBe('test=yes');
-    expect(enumParam('test', options, 'nope')).toBe('');
-    expect(enumParam('test', options, 'maybe')).toBe('test=maybe');
+    expect(enumParam('_test', options)).toBe('');
+    expect(enumParam('_test', options, 'yes')).toBe('_test=yes');
+    expect(enumParam('_test', options, 'nope')).toBe('');
+    expect(enumParam('_test', options, 'maybe')).toBe('_test=maybe');
   });
 });
 
@@ -111,9 +111,9 @@ describe('buildParams', () => {
     ).toBe(
       `
         ?ctl=1
-        &devToolsHeight=100
+        &devtoolsheight=100
         &embed=1
-        &hideDevTools=1
+        &hidedevtools=1
         &hideExplorer=1
         &hideNavigation=1
         &showSidebar=1
