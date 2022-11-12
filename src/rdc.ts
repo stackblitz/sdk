@@ -1,25 +1,28 @@
 import { genID } from './helpers';
 
-interface MessageData {
-  type: string;
-  payload: MessagePayload;
+interface MessagePayload {
+  [key: string]: any;
 }
 
-interface MessagePayload {
+interface MessagePayloadWithMetadata extends MessagePayload {
   __reqid: string;
   __success: boolean;
   __error?: string;
-  [key: string]: any;
+}
+
+interface MessageData {
+  type: string;
+  payload: MessagePayloadWithMetadata;
 }
 
 interface RequestData {
   type: string;
-  payload: { [key: string]: any };
+  payload: MessagePayload;
 }
 
 interface PendingResolvers {
   [id: string]: {
-    resolve(value: { [key: string]: any } | null): void;
+    resolve(value: any): void;
     reject(error: string): void;
   };
 }
@@ -33,10 +36,9 @@ export class RDC {
     this.port.onmessage = this.messageListener.bind(this);
   }
 
-  public request<T = null>({ type, payload }: RequestData): Promise<T | null> {
-    // Generate request ID
-    const id = genID();
+  public request<TResult = null>({ type, payload }: RequestData): Promise<TResult | null> {
     return new Promise((resolve, reject) => {
+      const id = genID();
       this.pending[id] = { resolve, reject };
       this.port.postMessage({
         type,
@@ -59,20 +61,20 @@ export class RDC {
 
     if (this.pending[id]) {
       if (success) {
-        this.pending[id].resolve(cleanResult(payload));
+        this.pending[id].resolve(this.cleanResult(payload));
       } else {
         this.pending[id].reject(error ? `${type}: ${error}` : type);
       }
       delete this.pending[id];
     }
   }
-}
 
-function cleanResult(payload: MessagePayload): { [key: string]: any } | null {
-  const result: Partial<typeof payload> = { ...payload };
-  delete result.__reqid;
-  delete result.__success;
-  delete result.__error;
-  // Null the result if payload was empty besides the private metadata fields
-  return Object.keys(result).length ? result : null;
+  private cleanResult(payload: MessagePayloadWithMetadata): MessagePayload | null {
+    const result: Partial<typeof payload> = { ...payload };
+    delete result.__reqid;
+    delete result.__success;
+    delete result.__error;
+    // Null the result if payload was empty besides the private metadata fields
+    return Object.keys(result).length ? result : null;
+  }
 }

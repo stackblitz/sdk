@@ -28,11 +28,15 @@
     "test": "vitest run"
   },
   "devDependencies": {
-    "@vitest/coverage-c8": "^0.25.1",
+    "@types/lodash": "^4.14.189",
+    "@vitest/coverage-c8": "^0.25.2",
+    "@vitest/ui": "^0.25.2",
+    "happy-dom": "^7.7.0",
+    "lodash": "^4.17.21",
     "prettier": "^2.7.1",
     "rimraf": "^3.0.2",
     "typescript": "~4.4.4",
-    "vite": "^3.2.3",
-    "vitest": "^0.25.1"
+    "vite": "^3.2.4",
+    "vitest": "^0.25.2"
   }
 }

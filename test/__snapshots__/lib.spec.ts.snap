@@ -1,0 +1,10 @@
+// Vitest Snapshot v1
+
+exports[`openProject > injects a form to open project in new page 1`] = `
+NamedNodeMap {
+  "action": "https://stackblitz.com/run",
+  "method": "POST",
+  "style": "display:none!important;",
+  "target": "_blank",
+}
+`;

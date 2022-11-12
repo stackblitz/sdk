@@ -26,5 +26,8 @@ export default defineConfig({
     globals: false,
     include: ['**/src/**/*.spec.ts', '**/test/**/*.spec.ts'],
     exclude: ['**/node_modules/**', '**/bundles/**', '**/types/**'],
+    coverage: {
+      provider: 'c8',
+    },
   },
 });

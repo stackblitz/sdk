@@ -10,7 +10,7 @@ export interface Project {
    * - EngineBlock environment: `angular-cli`, `create-react-app`, `javascript`, `polymer`, `typescript`, `vue`
    * - WebContainers environment: `node`
    *
-   * @see https://developer.stackblitz.com/docs/platform/available-environments
+   * @see https://developer.stackblitz.com/guides/user-guide/available-environments
    */
   template: ProjectTemplate;
   /**

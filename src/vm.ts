@@ -34,7 +34,7 @@ export class VM {
     if (!isObject(diff) || !isObject(diff.create)) {
       throw new Error('Invalid diff object: expected diff.create to be an object.');
     } else if (!Array.isArray(diff.destroy)) {
-      throw new Error('Invalid diff object: expected diff.create to be an array.');
+      throw new Error('Invalid diff object: expected diff.destroy to be an array.');
     }
 
     return this._rdc.request({
@@ -50,7 +50,7 @@ export class VM {
    * In WebContainers-based projects, returns data from the project’s `package.json` without resolving installed version numbers.
    */
   getDependencies(): Promise<ProjectDependencies | null> {
-    return this._rdc.request({
+    return this._rdc.request<ProjectDependencies>({
       type: 'SDK_GET_DEPS_SNAPSHOT',
       payload: {},
     });
@@ -60,7 +60,7 @@ export class VM {
    * Get a snapshot of the project files and their content.
    */
   getFsSnapshot(): Promise<ProjectFiles | null> {
-    return this._rdc.request<{ [path: string]: string }>({
+    return this._rdc.request<ProjectFiles>({
       type: 'SDK_GET_FS_SNAPSHOT',
       payload: {},
     });
@@ -148,7 +148,7 @@ export class VM {
      * In WebContainers-based projects, the origin will always be `null`;
      * try using `vm.preview.getUrl` instead.
      *
-     * @see https://developer.stackblitz.com/docs/platform/available-environments
+     * @see https://developer.stackblitz.com/guides/user-guide/available-environments
      */
     origin: '' as string | null,
 
@@ -166,7 +166,7 @@ export class VM {
      */
     getUrl: (): Promise<string | null> => {
       return this._rdc
-        .request<{ url: string } | null>({
+        .request<{ url: string }>({
           type: 'SDK_GET_PREVIEW_URL',
           payload: {},
         })

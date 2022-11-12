@@ -10,7 +10,7 @@ function createHiddenInput(name: string, value: string) {
   return input;
 }
 
-function createProjectForm(project: Project) {
+export function createProjectForm(project: Project) {
   if (!PROJECT_TEMPLATES.includes(project.template)) {
     const names = PROJECT_TEMPLATES.map((t) => `'${t}'`).join(', ');
     console.warn(`Unsupported project.template: must be one of ${names}`);
@@ -54,9 +54,16 @@ function createProjectForm(project: Project) {
 export function createProjectFrameHTML(project: Project, options?: EmbedOptions) {
   const form = createProjectForm(project);
   form.action = embedUrl('/run', options);
-  form.id = 'sb';
+  form.id = 'sb_run';
 
-  const html = `<html><head><title></title></head><body>${form.outerHTML}<script>document.getElementById('${form.id}').submit();</script></body></html>`;
+  const html = `<!doctype html>
+<html>
+<head><title></title></head>
+<body>
+  ${form.outerHTML}
+  <script>document.getElementById('${form.id}').submit();</script>
+</body>
+</html>`;
 
   return html;
 }

@@ -1,0 +1,10 @@
+// Vitest Snapshot v1
+
+exports[`vm.getDependencies > node project with package.json 1`] = `
+{
+  "lodash": "^4",
+  "rxjs": "^7",
+  "serve": "^12",
+  "vite": "^3",
+}
+`;
