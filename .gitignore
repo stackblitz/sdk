@@ -6,8 +6,7 @@ types
 node_modules
 
 # Tooling artifacts
-coverage
-ts-out
+temp
 
 # Misc
 ._*

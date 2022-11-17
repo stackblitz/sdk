@@ -24,10 +24,11 @@ export default defineConfig({
   },
   test: {
     globals: false,
-    include: ['**/src/**/*.spec.ts', '**/test/**/*.spec.ts'],
+    include: ['**/test/unit/**/*.spec.ts'],
     exclude: ['**/node_modules/**', '**/bundles/**', '**/types/**'],
     coverage: {
       provider: 'c8',
+      reportsDirectory: 'temp/coverage',
     },
   },
 });

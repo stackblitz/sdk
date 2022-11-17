@@ -1,8 +1,9 @@
 import { describe, expect, test } from 'vitest';
 
-import { getRequestHandler } from '../mocks/backend';
-import { type Project } from '../src/interfaces';
-import { VM, type FsDiff } from '../src/vm';
+import { type Project } from '../../src/interfaces';
+import { VM, type FsDiff } from '../../src/vm';
+
+import { getRequestHandler } from '../../mocks/backend';
 import { getTestProject } from './utils/project';
 
 async function getVm(project: Project, { delay = 0 }: { delay?: number } = {}) {

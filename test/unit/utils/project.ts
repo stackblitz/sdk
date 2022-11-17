@@ -1,4 +1,4 @@
-import type { Project } from '../../src/interfaces';
+import type { Project } from '../../../src/interfaces';
 
 export function getTestProject(project?: Partial<Project>): Project {
   return {

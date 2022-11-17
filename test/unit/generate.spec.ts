@@ -2,7 +2,8 @@
 
 import { afterEach, describe, expect, test, vi } from 'vitest';
 
-import { createProjectForm, createProjectFrameHTML, openNewProject } from '../src/generate';
+import { createProjectForm, createProjectFrameHTML, openNewProject } from '../../src/generate';
+
 import { useMockConsole, restoreConsole } from './utils/console';
 import { formValue, makeContainer, removeContainer } from './utils/dom';
 import { getTestProject } from './utils/project';

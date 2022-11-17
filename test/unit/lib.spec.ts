@@ -2,7 +2,8 @@
 
 import { describe, expect, test, vi } from 'vitest';
 
-import { connect, openGithubProject, openProject, openProjectId } from '../src/lib';
+import { connect, openGithubProject, openProject, openProjectId } from '../../src/lib';
+
 import { getTestProject } from './utils/project';
 
 /**

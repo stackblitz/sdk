@@ -6,7 +6,7 @@
     "lib": ["es2018", "DOM"],
     "noImplicitAny": true,
     "strictNullChecks": true,
-    "outDir": "./ts-out/",
+    "outDir": "./temp/tsc/",
     "declaration": true,
     "declarationDir": "./types/",
     "emitDeclarationOnly": true,
