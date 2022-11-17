@@ -1,12 +1,10 @@
 /** @vitest-environment happy-dom */
-
 import { afterEach, describe, expect, test, vi } from 'vitest';
 
-import { createProjectForm, createProjectFrameHTML, openNewProject } from '../../src/generate';
-
-import { useMockConsole, restoreConsole } from './utils/console';
-import { formValue, makeContainer, removeContainer } from './utils/dom';
-import { getTestProject } from './utils/project';
+import { createProjectForm, createProjectFrameHTML, openNewProject } from '$src/generate';
+import { useMockConsole, restoreConsole } from '$test/unit/utils/console';
+import { formValue, makeContainer, removeContainer } from '$test/unit/utils/dom';
+import { getTestProject } from '$test/unit/utils/project';
 
 const cleanUp = () => {
   restoreConsole();

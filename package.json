@@ -22,10 +22,13 @@
     "README.md"
   ],
   "scripts": {
-    "build": "rimraf bundles ts-out types && tsc && vite build",
-    "format": "prettier --write src tsconfig.json vite.config.ts",
-    "prepack": "npm test && npm run build",
-    "test": "vitest run"
+    "build:lib": "vite build",
+    "build:test": "vite build --config vite.test.ts",
+    "build:types": "tsc -p tsconfig.json",
+    "clean": "rimraf bundles temp types ",
+    "format": "prettier --write 'src/*.ts' 'test/**/*.ts' vite.*.ts",
+    "prepack": "npm run clean && npm run build:types && npm run build:lib",
+    "test": "vitest run --config vite.test.ts"
   },
   "devDependencies": {
     "@types/lodash": "^4.14.189",
@@ -37,6 +40,7 @@
     "rimraf": "^3.0.2",
     "typescript": "~4.4.4",
     "vite": "^3.2.4",
+    "vite-tsconfig-paths": "^3.5.2",
     "vitest": "^0.25.2"
   }
 }

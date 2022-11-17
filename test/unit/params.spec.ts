@@ -7,7 +7,7 @@ import {
   percentParam,
   stringParams,
   trueParam,
-} from '../../src/params';
+} from '$src/params';
 
 describe('params formats', () => {
   test('trueParam accepts true only', () => {

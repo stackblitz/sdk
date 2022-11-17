@@ -5,13 +5,49 @@ import type { Project, ProjectOptions } from '../../src/interfaces';
 import type {
   AppState,
   AppStateContext,
+  HandleRequest,
+  HandleRootRequest,
   MessageContext,
   RequestData,
   ProjectContext,
 } from './types';
 import { fileToPanes, filterPanes } from './validation';
 
-export function getMessageContext(data: RequestData): MessageContext {
+import * as dependenciesHandlers from './handlers/dependencies';
+import * as editorHandlers from './handlers/editor';
+import * as fsHandlers from './handlers/fs';
+import * as previewHandlers from './handlers/preview';
+
+const handlers: Record<string, HandleRequest> = {
+  ...dependenciesHandlers,
+  ...editorHandlers,
+  ...fsHandlers,
+  ...previewHandlers,
+};
+
+export function getRequestHandler(
+  project: Project,
+  options: ProjectOptions = {}
+): HandleRootRequest {
+  const projectContext = getProjectContext(project);
+  const appStateContext = getAppStateContext(project, options);
+
+  return (data) => {
+    const messageContext = getMessageContext(data);
+
+    if (typeof handlers[data.type] === 'function') {
+      return handlers[data.type](data, {
+        ...appStateContext,
+        ...messageContext,
+        ...projectContext,
+      });
+    }
+
+    return messageContext.error('NOT IMPLEMENTED');
+  };
+}
+
+function getMessageContext(data: RequestData): MessageContext {
   return {
     error(msg) {
       return {

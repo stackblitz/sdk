@@ -1,4 +1,4 @@
-import { defineConfig } from 'vitest/config';
+import { defineConfig } from 'vite';
 
 export default defineConfig({
   build: {
@@ -20,15 +20,6 @@ export default defineConfig({
         if (format === 'umd') suffix = '.umd';
         return `sdk${suffix}.js`;
       },
-    },
-  },
-  test: {
-    globals: false,
-    include: ['**/test/unit/**/*.spec.ts'],
-    exclude: ['**/node_modules/**', '**/bundles/**', '**/types/**'],
-    coverage: {
-      provider: 'c8',
-      reportsDirectory: 'temp/coverage',
     },
   },
 });

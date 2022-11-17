@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "module": "esnext",
+    "moduleResolution": "node",
+    "target": "es2018",
+    "lib": ["es2018", "DOM"],
+    "strict": true,
+    "noEmit": true,
+    "paths": {
+      "$src/*": ["../src/*"],
+      "$test/*": ["./*"]
+    }
+  },
+  "include": ["./*.d.ts", "./client", "./e2e", "./server", "./unit"]
+}

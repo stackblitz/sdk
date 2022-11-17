@@ -1,3 +1,4 @@
+import { cleanPreviewPath } from '../validation';
 import type { HandleRequest } from '../types';
 
 export const SDK_GET_PREVIEW_URL: HandleRequest = (_data, { error, success, getState }) => {
@@ -35,15 +36,4 @@ export const SDK_SET_PREVIEW_URL: HandleRequest = (
   }
 
   return success();
-};
-
-const cleanPreviewPath = (input: any): string => {
-  if (typeof input === 'string') {
-    let path = decodeURIComponent(input).split(/#\?/)[0].trim();
-    if (path.length > 0 && !path.startsWith('/')) {
-      path = '/' + path;
-    }
-    return path;
-  }
-  return '';
 };

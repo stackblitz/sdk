@@ -85,5 +85,5 @@ export function stringParams(name: ParamName, value?: string | string[]): string
   const values = Array.isArray(value) ? value : [value];
   return values
     .filter((val) => typeof val === 'string' && val.trim() !== '')
-    .map((val: string) => `${name}=${encodeURIComponent(val.trim())}`);
+    .map((val) => `${name}=${encodeURIComponent(val!.trim())}`);
 }
