@@ -1,7 +1,4 @@
 import sdk from '$src/index';
 
-const baseConfig = {
-  origin: import.meta.env.TEST_STACKBLITZ_ORIGIN,
-};
-
-sdk.embedProjectId('__TEST_CONTAINER__', 'js', baseConfig);
+(window as any).TEST_STACKBLITZ_ORIGIN = import.meta.env.TEST_STACKBLITZ_ORIGIN || '/server/';
+(window as any).StackBlitzSDK = sdk;

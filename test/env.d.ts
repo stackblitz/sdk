@@ -7,3 +7,5 @@ interface ImportMetaEnv {
 interface ImportMeta {
   readonly env: ImportMetaEnv;
 }
+
+type StackBlitzSDK = typeof import('$src/index').default;

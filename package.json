@@ -28,9 +28,11 @@
     "clean": "rimraf bundles temp types ",
     "format": "prettier --write 'src/*.ts' 'test/**/*.ts' vite.*.ts",
     "prepack": "npm run clean && npm run build:types && npm run build:lib",
+    "start": "vite dev --config vite.test.ts",
     "test": "vitest run --config vite.test.ts"
   },
   "devDependencies": {
+    "@playwright/test": "^1.28.0",
     "@types/lodash": "^4.14.189",
     "@vitest/coverage-c8": "^0.25.2",
     "@vitest/ui": "^0.25.2",
