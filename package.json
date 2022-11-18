@@ -22,14 +22,14 @@
     "README.md"
   ],
   "scripts": {
-    "build:lib": "vite build",
-    "build:test": "vite build --config vite.test.ts",
-    "build:types": "tsc -p tsconfig.json",
-    "clean": "rimraf bundles temp types ",
+    "build": "tsc -p tsconfig.lib.json && vite build --config vite.lib.ts",
+    "clean": "rimraf bundles temp types",
     "format": "prettier --write 'src/*.ts' 'test/**/*.ts' vite.*.ts",
-    "prepack": "npm run clean && npm run build:types && npm run build:lib",
+    "prepack": "npm run clean && npm run build",
     "start": "vite dev --config vite.test.ts",
-    "test": "vitest run --config vite.test.ts"
+    "test:e2e": "npx playwright test",
+    "test:unit": "vitest run --config vite.test.ts",
+    "test": "npm run test:unit && npm run test:e2e"
   },
   "devDependencies": {
     "@playwright/test": "^1.28.0",

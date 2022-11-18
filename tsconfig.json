@@ -5,11 +5,14 @@
     "target": "es2018",
     "lib": ["es2018", "DOM"],
     "strict": true,
-    "outDir": "./temp/tsc/",
-    "declaration": true,
-    "declarationDir": "./types/",
-    "emitDeclarationOnly": true,
-    "removeComments": false
+    "outDir": "./temp/tsc"
   },
-  "include": ["./src/"]
+  "references": [
+    {
+      "path": "./tsconfig.lib.json"
+    },
+    {
+      "path": "./tsconfig.test.json"
+    }
+  ]
 }

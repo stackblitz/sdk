@@ -27,12 +27,12 @@ npm install
 # Generate the 'bundles' and 'types' folders
 npm run build
 
-# Run tests
+# Run all tests
 npm test
 
-# Run tests in watch mode
-npx vitest run
+# Run unit tests with coverage report
+npm run test:unit -- --coverage
 
-# Run tests with coverage report
-npx vitest run --coverage
+# Run e2e tests
+npm run test:e2e
 ```

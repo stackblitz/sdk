@@ -3,16 +3,15 @@ import TSConfigPaths from 'vite-tsconfig-paths';
 import { UserConfig } from 'vitest/config';
 
 const config: UserConfig = {
-  root: './test',
   plugins: [
     TSConfigPaths({
       loose: true, // allow aliases in .html files
-      root: resolve(__dirname, 'test'),
+      projects: [resolve(__dirname, 'tsconfig.test.json')],
     }),
   ],
   build: {
     target: 'es2020',
-    outDir: '../temp/test-build',
+    outDir: './temp/test-build',
   },
   envPrefix: 'TEST_',
   server: {
@@ -20,13 +19,13 @@ const config: UserConfig = {
   },
   test: {
     globals: false,
-    include: ['**/unit/**/*.spec.ts'],
+    include: ['**/test/unit/**/*.spec.ts'],
     exclude: ['**/node_modules/**'],
     coverage: {
       provider: 'c8',
-      include: ['**/src/**/*.ts', '**/server/**/*.ts'],
+      include: ['**/src/**/*.ts', '**/test/server/**/*.ts'],
       exclude: ['**/node_modules/**'],
-      reportsDirectory: '../temp/coverage',
+      reportsDirectory: './temp/coverage',
     },
   },
 };

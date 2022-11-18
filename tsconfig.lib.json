@@ -1,0 +1,11 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "composite": true,
+    "declaration": true,
+    "declarationDir": "./types/",
+    "emitDeclarationOnly": true,
+    "removeComments": false
+  },
+  "include": ["./src/"]
+}
