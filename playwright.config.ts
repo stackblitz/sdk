@@ -38,7 +38,7 @@ const config: PlaywrightTestConfig = {
   },
   /* Run your local dev server before starting the tests */
   webServer: {
-    command: 'npm start',
+    command: `STACKBLITZ_SERVER_ORIGIN='/_embed' npm start`,
     port: 4000,
   },
 };

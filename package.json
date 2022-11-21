@@ -22,27 +22,27 @@
     "README.md"
   ],
   "scripts": {
-    "build": "tsc -p tsconfig.lib.json && vite build --config vite.lib.ts",
+    "build": "npm run clean && tsc -p tsconfig.lib.json && vite build --mode production",
     "clean": "rimraf bundles temp types",
-    "format": "prettier --write 'src/*.ts' 'test/**/*.ts' vite.*.ts",
-    "prepack": "npm run clean && npm run build",
-    "start": "vite dev --config vite.test.ts",
-    "test:e2e": "npx playwright test",
-    "test:unit": "vitest run --config vite.test.ts",
-    "test": "npm run test:unit && npm run test:e2e"
+    "e2e": "npx playwright test",
+    "format": "prettier --write 'src/**/*.ts' 'test/**/*.ts' vite.*.ts",
+    "prepack": "npm test && npm run build",
+    "start": "vite dev --mode test",
+    "test": "vitest run --mode test"
   },
   "devDependencies": {
     "@playwright/test": "^1.28.0",
+    "@rollup/plugin-replace": "^5.0.1",
     "@types/lodash": "^4.14.189",
-    "@vitest/coverage-c8": "^0.25.2",
-    "@vitest/ui": "^0.25.2",
+    "@vitest/coverage-c8": "^0.25.3",
+    "@vitest/ui": "^0.25.3",
     "happy-dom": "^7.7.0",
     "lodash": "^4.17.21",
-    "prettier": "^2.7.1",
+    "prettier": "^2.8.0",
     "rimraf": "^3.0.2",
     "typescript": "~4.4.4",
     "vite": "^3.2.4",
-    "vite-tsconfig-paths": "^3.5.2",
-    "vitest": "^0.25.2"
+    "vite-tsconfig-paths": "^3.6.0",
+    "vitest": "^0.25.3"
   }
 }

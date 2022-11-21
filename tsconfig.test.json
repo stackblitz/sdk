@@ -2,19 +2,22 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "composite": true,
+    "tsBuildInfoFile": "./temp/tsbuildinfo",
     "paths": {
       // Use local sources when demo and test pages import @stackblitz/sdk
-      "@stackblitz/sdk": ["./src/index.ts"],
-      "$src/*": ["./src/*"],
-      "$test/*": ["./test/*"]
+      "@stackblitz/sdk": ["./src/lib/index.ts"],
+      "$lib/*": ["./src/lib/*"],
+      "$server/*": ["./src/server/*"]
     }
   },
   "include": [
-    "./src",
+    "./examples",
+    "./src/lib",
+    "./src/server",
     "./test/*.d.ts",
-    "./test/client",
     "./test/e2e",
-    "./test/server",
-    "./test/unit"
+    "./test/embed",
+    "./test/unit",
+    "src/env.d.ts"
   ]
 }

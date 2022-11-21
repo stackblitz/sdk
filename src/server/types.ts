@@ -1,4 +1,4 @@
-import type { Project } from '../../src/interfaces';
+import type { Project } from '$lib/interfaces';
 
 export interface RequestData {
   type: string;

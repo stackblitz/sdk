@@ -1,4 +1,4 @@
-import type { OpenFileOption } from '../../src/interfaces';
+import type { OpenFileOption } from '$lib/interfaces';
 
 export function isTheme(input: any) {
   return ['default', 'dark', 'light'].includes(input);

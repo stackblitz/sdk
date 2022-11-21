@@ -1,6 +1,6 @@
 import cloneDeep from 'lodash/cloneDeep';
 
-import type { Project, ProjectOptions } from '../../src/interfaces';
+import type { Project, ProjectOptions } from '$lib/interfaces';
 
 import type {
   AppState,
