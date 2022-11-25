@@ -1,13 +1,13 @@
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
-    "rootDir": "./src/lib",
+    "rootDir": "./src",
     "composite": true,
     "tsBuildInfoFile": "./temp/tsbuildinfo",
     "declaration": true,
-    "declarationDir": "./types/",
+    "declarationDir": "./types",
     "emitDeclarationOnly": true,
     "removeComments": false
   },
-  "include": ["./src/*.d.ts", "./src/lib"]
+  "include": ["./src"]
 }

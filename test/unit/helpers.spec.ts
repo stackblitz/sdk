@@ -1,8 +1,8 @@
 /** @vitest-environment happy-dom */
 import { afterEach, describe, expect, test } from 'vitest';
 
-import { DEFAULT_FRAME_HEIGHT } from '$lib/constants';
-import { embedUrl, findElement, genID, openTarget, openUrl, replaceAndEmbed } from '$lib/helpers';
+import { DEFAULT_FRAME_HEIGHT } from '$src/constants';
+import { embedUrl, findElement, genID, openTarget, openUrl, replaceAndEmbed } from '$src/helpers';
 import { h, makeContainer, removeContainer } from './utils/dom';
 
 describe('embedUrl', () => {

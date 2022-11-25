@@ -5,19 +5,18 @@
     "tsBuildInfoFile": "./temp/tsbuildinfo",
     "paths": {
       // Use local sources when demo and test pages import @stackblitz/sdk
-      "@stackblitz/sdk": ["./src/lib/index.ts"],
-      "$lib/*": ["./src/lib/*"],
-      "$server/*": ["./src/server/*"]
+      "@stackblitz/sdk": ["./src/index.ts"],
+      "$src/*": ["./src/*"],
+      "$test/*": ["./test/*"]
     }
   },
   "include": [
     "./examples",
-    "./src/lib",
-    "./src/server",
+    "./src",
     "./test/*.d.ts",
     "./test/e2e",
     "./test/embed",
-    "./test/unit",
-    "src/env.d.ts"
+    "./test/server",
+    "./test/unit"
   ]
 }

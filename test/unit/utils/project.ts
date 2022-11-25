@@ -1,4 +1,4 @@
-import type { Project } from '$lib/index';
+import type { Project } from '$src/index';
 
 export function getTestProject(project?: Partial<Project>): Project {
   return {

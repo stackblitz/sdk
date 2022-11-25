@@ -28,7 +28,7 @@ const libConfig: UserConfig = {
     sourcemap: true,
     lib: {
       name: 'StackBlitzSDK',
-      entry: 'src/lib/index.ts',
+      entry: 'src/index.ts',
       formats: ['cjs', 'es', 'umd'],
       // Override the default file names used by Vite's “Library Mode”
       // (https://vitejs.dev/guide/build.html#library-mode) for backwards

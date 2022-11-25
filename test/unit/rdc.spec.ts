@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'vitest';
 
-import { RDC } from '$lib/rdc';
+import { RDC } from '$src/rdc';
 
 function getRdc({ error, delay }: { error?: string; delay?: number } = {}) {
   const channel = new MessageChannel();
