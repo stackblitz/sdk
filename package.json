@@ -22,18 +22,19 @@
     "README.md"
   ],
   "scripts": {
-    "build": "npm run clean && tsc -p tsconfig.lib.json && vite build --mode production",
+    "build": "npm run clean && tsc -p tsconfig.lib.json && vite build --mode lib",
     "clean": "rimraf bundles temp types",
     "e2e": "npx playwright test",
     "format": "prettier --write 'src/**/*.ts' 'test/**/*.ts' vite.*.ts",
     "prepack": "npm test && npm run build",
-    "start": "vite dev --mode test",
+    "start": "vite dev --mode dev --open /examples/",
+    "start:e2e": "vite dev --mode e2e",
     "test": "vitest run --mode test"
   },
   "devDependencies": {
-    "@playwright/test": "^1.28.0",
+    "@playwright/test": "^1.28.1",
     "@rollup/plugin-replace": "^5.0.1",
-    "@types/lodash": "^4.14.189",
+    "@types/lodash": "^4.14.190",
     "@vitest/coverage-c8": "^0.25.3",
     "@vitest/ui": "^0.25.3",
     "happy-dom": "^7.7.0",

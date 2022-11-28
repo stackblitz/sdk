@@ -10,13 +10,5 @@
       "$test/*": ["./test/*"]
     }
   },
-  "include": [
-    "./examples",
-    "./src",
-    "./test/*.d.ts",
-    "./test/e2e",
-    "./test/embed",
-    "./test/server",
-    "./test/unit"
-  ]
+  "include": ["./examples", "./src", "./test"]
 }

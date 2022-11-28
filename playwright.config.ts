@@ -9,7 +9,7 @@ const config: PlaywrightTestConfig = {
   outputDir: './temp/e2e-results',
   timeout: 30_000,
   expect: {
-    timeout: 5000,
+    timeout: 5_000,
   },
   /* Run tests in files in parallel */
   fullyParallel: true,
@@ -30,16 +30,14 @@ const config: PlaywrightTestConfig = {
       },
     },
   ],
-  /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     actionTimeout: 0,
-    baseURL: 'http://localhost:4000',
+    //baseURL: 'http://localhost:4001',
     trace: 'on-first-retry',
   },
-  /* Run your local dev server before starting the tests */
   webServer: {
-    command: `STACKBLITZ_SERVER_ORIGIN='/_embed' npm start`,
-    port: 4000,
+    command: `npm run start:e2e`,
+    port: 4001,
   },
 };
 

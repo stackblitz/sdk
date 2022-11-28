@@ -1,15 +1,10 @@
 import { test, expect } from '@playwright/test';
 
 test('embedProjectId', async ({ page }) => {
-  await page.goto('/blank/');
-  await page.waitForLoadState('load');
+  await page.goto('/test/pages/blank.html');
 
   await page.evaluate(() => {
-    const sdk: StackBlitzSDK = (window as any).StackBlitzSDK;
-    if (!sdk) {
-      throw new Error('StackBlitzSDK is not defined');
-    }
-    (window as any).__vm__ = sdk.embedProjectId('embed', 'js');
+    window.StackBlitzSDK.embedProjectId('embed', 'js');
   });
 
   const iframe = page.locator('iframe');
