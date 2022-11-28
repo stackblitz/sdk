@@ -37,6 +37,7 @@
     "@types/lodash": "^4.14.190",
     "@vitest/coverage-c8": "^0.25.3",
     "@vitest/ui": "^0.25.3",
+    "body-parser": "^1.20.1",
     "happy-dom": "^7.7.0",
     "lodash": "^4.17.21",
     "prettier": "^2.8.0",

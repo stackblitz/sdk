@@ -10,6 +10,9 @@ import type {
   MessageContext,
   RequestData,
   ProjectContext,
+  InitRequestData,
+  AnyRequestData,
+  InitResponseData,
 } from './types';
 import { fileToPanes, filterPanes } from './validation';
 
@@ -33,18 +36,40 @@ export function getRequestHandler(
   const appStateContext = getAppStateContext(project, options);
 
   return (data) => {
-    const messageContext = getMessageContext(data);
-
-    if (typeof handlers[data.type] === 'function') {
-      return handlers[data.type](data, {
-        ...appStateContext,
-        ...messageContext,
-        ...projectContext,
-      });
+    if (isInitRequest(data)) {
+      const response: InitResponseData = {
+        action: 'SDK_INIT_SUCCESS',
+        id: data.id,
+        payload: {
+          previewOrigin:
+            projectContext.getProject().template === 'node' ? null : 'https://test.stackblitz.io',
+        },
+      };
+      return response;
     }
 
-    return messageContext.error('NOT IMPLEMENTED');
+    if (isVmRequest(data)) {
+      const context = {
+        ...appStateContext,
+        ...projectContext,
+        ...getMessageContext(data),
+      };
+      if (typeof handlers[data.type] === 'function') {
+        return handlers[data.type](data, context);
+      }
+      return context.error('NOT IMPLEMENTED');
+    }
+
+    return null;
   };
+}
+
+function isInitRequest(data: AnyRequestData): data is InitRequestData {
+  return data.action === 'SDK_INIT' && typeof data.id === 'string';
+}
+
+function isVmRequest(data: AnyRequestData): data is RequestData {
+  return typeof data.type === 'string' && data.type.startsWith('SDK_');
 }
 
 function getMessageContext(data: RequestData): MessageContext {
@@ -64,15 +89,15 @@ function getMessageContext(data: RequestData): MessageContext {
   };
 }
 
-export function getProjectContext(project: Project): ProjectContext {
-  const clone = cloneDeep(project);
+export function getProjectContext(originalProject: Project): ProjectContext {
+  const project = cloneDeep(originalProject);
 
   return {
     getProject() {
-      return clone;
+      return project;
     },
     patchProject(patchFn) {
-      patchFn(clone);
+      patchFn(project);
     },
   };
 }

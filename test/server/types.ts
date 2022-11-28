@@ -1,12 +1,27 @@
 import type { Project } from '$src/interfaces';
 
+export interface InitRequestData {
+  action: 'SDK_INIT';
+  id: string;
+}
+
+export interface InitResponseData {
+  action: 'SDK_INIT_SUCCESS';
+  id: string;
+  payload: {
+    previewOrigin: string | null;
+  };
+}
+
 export interface RequestData {
-  type: string;
+  type: `SDK_${string}`;
   payload: {
     __reqid: string;
     [key: string]: any;
   };
 }
+
+export type AnyRequestData = Partial<InitRequestData & RequestData>;
 
 export interface ResponseData {
   type: string;
@@ -46,4 +61,4 @@ export type HandlerContext = AppStateContext & ProjectContext & MessageContext;
 
 export type HandleRequest = (data: RequestData, context: HandlerContext) => ResponseData;
 
-export type HandleRootRequest = (data: RequestData) => ResponseData;
+export type HandleRootRequest = (data: AnyRequestData) => InitResponseData | ResponseData | null;

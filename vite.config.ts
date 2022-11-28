@@ -1,6 +1,7 @@
 import ReplacePlugin from '@rollup/plugin-replace';
 import fs from 'node:fs/promises';
 import path from 'node:path';
+import bodyParser from 'body-parser';
 import type { Plugin, ViteDevServer } from 'vite';
 import TSConfigPaths from 'vite-tsconfig-paths';
 import type { UserConfig } from 'vitest/config';
@@ -99,23 +100,6 @@ function testConfig(mode: string): UserConfig {
   };
 }
 
-/**
- * Serve a custom HTML page for requests to '/_embed/*'
- */
-function configureServer(server: ViteDevServer) {
-  server.middlewares.use('/_embed', async (req, res, next) => {
-    const pathname = req.url && new URL(req.url, 'http://localhost/').pathname;
-    const ext = pathname && path.parse(pathname).ext;
-    if (ext === '' || ext === '.html') {
-      const content = await fs.readFile(`${__dirname}/test/embed/index.html`);
-      res.statusCode = 200;
-      res.end(content);
-    } else {
-      next();
-    }
-  });
-}
-
 function replaceOrigin(origin?: string): Plugin {
   return ReplacePlugin({
     preventAssignment: true,
@@ -123,4 +107,42 @@ function replaceOrigin(origin?: string): Plugin {
       __STACKBLITZ_SERVER_ORIGIN__: JSON.stringify(origin),
     },
   });
+}
+
+/**
+ * Serve a custom HTML page for requests to '/_embed/*'
+ */
+function configureServer(server: ViteDevServer) {
+  // Parse URL-encoded form data in POST requests
+  server.middlewares.use(bodyParser.urlencoded({ extended: true }));
+
+  server.middlewares.use('/_embed', async (req, res, next) => {
+    const pathname = req.url && new URL(req.url, 'http://localhost/').pathname;
+    const ext = pathname && path.parse(pathname).ext;
+
+    if (ext === '' || ext === '.html') {
+      const content = await fs.readFile(`${__dirname}/test/embed/index.html`);
+      const html = content.toString().replace('{{PROJECT_DATA}}', getProjectDataString(req));
+      res.statusCode = 200;
+      res.end(html);
+    } else {
+      next();
+    }
+  });
+}
+
+function getProjectDataString(req: any): string {
+  if (req.method === 'POST' && req.body?.project) {
+    const project = {
+      ...req.body.project,
+    };
+
+    if (typeof project.settings === 'string') {
+      project.settings = JSON.parse(project.settings);
+    }
+
+    return JSON.stringify(project, null, 2);
+  }
+
+  return 'null';
 }
