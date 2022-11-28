@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>@stackblitz/sdk loaded from CDNs</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+  </head>
+  <body>
+    <!-- Load UMD module -->
+    <script src="https://unpkg.com/@stackblitz/sdk@1/bundles/sdk.umd.js"></script>
+    <script>
+      window.sdk_from_unpkg = window.StackBlitzSDK;
+    </script>
+
+    <!-- Load ESM module -->
+    <script type="module">
+      import sdk from 'https://cdn.jsdelivr.net/npm/@stackblitz/sdk@1/bundles/sdk.m.js';
+      window.sdk_from_jsdelivr = sdk;
+    </script>
+  </body>
+</html>

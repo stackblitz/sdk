@@ -27,10 +27,8 @@ export function embedUrl(route: Route, options?: EmbedOptions) {
 }
 
 function getOrigin(options: OpenOptions & EmbedOptions = {}) {
-  if (typeof options.origin === 'string') {
-    return options.origin.trim().replace(/\/$/, '');
-  }
-  return DEFAULT_ORIGIN;
+  const origin = typeof options.origin === 'string' ? options.origin : DEFAULT_ORIGIN;
+  return origin.replace(/\/$/, '');
 }
 
 export function replaceAndEmbed(

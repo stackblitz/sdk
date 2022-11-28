@@ -1,0 +1,13 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "rootDir": "./src",
+    "composite": true,
+    "tsBuildInfoFile": "./temp/tsbuildinfo",
+    "declaration": true,
+    "declarationDir": "./types",
+    "emitDeclarationOnly": true,
+    "removeComments": false
+  },
+  "include": ["./src"]
+}

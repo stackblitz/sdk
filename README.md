@@ -13,7 +13,6 @@ Check out our SDK documentation on developer.stackblitz.com:
 ## Reporting issues
 
 - Issues with the SDK can be filed at https://github.com/stackblitz/sdk/issues
-
 - Other issues with StackBlitz can be filed at https://github.com/stackblitz/core/issues
 
 ## Development
@@ -27,12 +26,15 @@ npm install
 # Generate the 'bundles' and 'types' folders
 npm run build
 
-# Run tests
+# Run all tests
 npm test
 
-# Run tests in watch mode
-npx vitest run
+# Run unit tests with coverage report
+npm run test -- --coverage
 
-# Run tests with coverage report
-npx vitest run --coverage
+# Run end-to-end tests with mock server
+npm run e2e
+
+# Run end-to-end tests against stackblitz.com
+STACKBLITZ_SERVER_ORIGIN=https://stackblitz.com npm run e2e
 ```

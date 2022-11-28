@@ -1,16 +1,16 @@
 import { describe, expect, test } from 'vitest';
 
-import { RDC } from '../src/rdc';
+import { RDC } from '$src/rdc';
 
 function getRdc({ error, delay }: { error?: string; delay?: number } = {}) {
   const channel = new MessageChannel();
 
-  channel.port2.onmessage = function (event) {
+  channel.port1.onmessage = function (event) {
     const message = getResponseMessage({ ...event.data, error });
     setTimeout(() => this.postMessage(message), delay);
   };
 
-  return new RDC(channel.port1);
+  return new RDC(channel.port2);
 }
 
 function getResponseMessage({

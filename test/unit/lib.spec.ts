@@ -1,8 +1,7 @@
 /** @vitest-environment happy-dom */
-
 import { describe, expect, test, vi } from 'vitest';
 
-import { connect, openGithubProject, openProject, openProjectId } from '../src/lib';
+import { connect, openGithubProject, openProject, openProjectId } from '$src/lib';
 import { getTestProject } from './utils/project';
 
 /**
@@ -24,11 +23,11 @@ describe('openProject', () => {
     let form: HTMLFormElement;
     const observerCb = vi.fn(([record]: MutationRecord[]) => {
       if (!record || form) return;
-      for (const node of record.addedNodes) {
+      record.addedNodes.forEach((node) => {
         if (node instanceof HTMLFormElement) {
           form = node;
         }
-      }
+      });
     });
     const observer = new MutationObserver(observerCb);
     observer.observe(document.body, {

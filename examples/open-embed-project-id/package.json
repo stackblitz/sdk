@@ -1,0 +1,9 @@
+{
+  "name": "sdk-example-open-embed-project-id",
+  "description": "Demo of the StackBlitz SDK's methods for opening & embedding an existing StackBlitz project",
+  "version": "0.0.0",
+  "private": true,
+  "dependencies": {
+    "@stackblitz/sdk": "^1.8.1"
+  }
+}

@@ -8,7 +8,7 @@ export class Connection {
   element: HTMLIFrameElement;
   id: string;
   pending: Promise<VM>;
-  vm: VM;
+  vm?: VM;
 
   constructor(element: HTMLIFrameElement) {
     this.id = genID();
@@ -47,7 +47,7 @@ export class Connection {
       const interval = window.setInterval(() => {
         // If the VM connection is open, cleanup and return
         // This shouldn't ever happen, but just in case there's some race condition...
-        if (!!this.vm) {
+        if (this.vm) {
           cleanup();
           return;
         }

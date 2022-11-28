@@ -2,15 +2,18 @@
   "compilerOptions": {
     "module": "esnext",
     "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
     "target": "es2018",
-    "lib": ["es2018", "DOM"],
-    "noImplicitAny": true,
-    "strictNullChecks": true,
-    "outDir": "./ts-out/",
-    "declaration": true,
-    "declarationDir": "./types/",
-    "emitDeclarationOnly": true,
-    "removeComments": false
+    "lib": ["es2018", "DOM", "DOM.Iterable"],
+    "strict": true,
+    "outDir": "./temp/tsc"
   },
-  "include": ["./src/"]
+  "references": [
+    {
+      "path": "./tsconfig.lib.json"
+    },
+    {
+      "path": "./tsconfig.test.json"
+    }
+  ]
 }

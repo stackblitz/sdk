@@ -16,7 +16,9 @@ export const DEFAULT_FRAME_HEIGHT = 300;
 /**
  * Origin of the StackBlitz instance
  */
-export const DEFAULT_ORIGIN = 'https://stackblitz.com';
+export const DEFAULT_ORIGIN: string =
+  // @ts-ignore This will be replaced at build time
+  __STACKBLITZ_SERVER_ORIGIN__ || 'https://stackblitz.com';
 
 /**
  * List of supported template names.

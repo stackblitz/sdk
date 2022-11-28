@@ -1,9 +1,9 @@
 import { describe, expect, test } from 'vitest';
 
-import { getRequestHandler } from '../mocks/backend';
-import { type Project } from '../src/interfaces';
-import { VM, type FsDiff } from '../src/vm';
-import { getTestProject } from './utils/project';
+import type { Project, FsDiff } from '$src/index';
+import { VM } from '$src/vm';
+import { getRequestHandler } from '$test/server/request';
+import { getTestProject } from '$test/unit/utils/project';
 
 async function getVm(project: Project, { delay = 0 }: { delay?: number } = {}) {
   const channel = new MessageChannel();
