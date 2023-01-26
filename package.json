@@ -32,19 +32,19 @@
     "test": "vitest run --mode test"
   },
   "devDependencies": {
-    "@playwright/test": "^1.28.1",
-    "@rollup/plugin-replace": "^5.0.1",
-    "@types/lodash": "^4.14.190",
-    "@vitest/coverage-c8": "^0.25.3",
-    "@vitest/ui": "^0.25.3",
+    "@playwright/test": "^1.30.0",
+    "@rollup/plugin-replace": "^5.0.2",
+    "@types/lodash": "^4.14.191",
+    "@vitest/coverage-c8": "^0.28.2",
+    "@vitest/ui": "^0.28.2",
     "body-parser": "^1.20.1",
-    "happy-dom": "^7.7.0",
+    "happy-dom": "^8.1.5",
     "lodash": "^4.17.21",
-    "prettier": "^2.8.0",
-    "rimraf": "^3.0.2",
+    "prettier": "^2.8.3",
+    "rimraf": "^4.1.2",
     "typescript": "~4.4.4",
-    "vite": "^3.2.4",
-    "vite-tsconfig-paths": "^3.6.0",
-    "vitest": "^0.25.3"
+    "vite": "^4.0.4",
+    "vite-tsconfig-paths": "^4.0.5",
+    "vitest": "^0.28.2"
   }
 }

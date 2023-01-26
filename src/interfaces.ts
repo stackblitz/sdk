@@ -33,7 +33,7 @@ export interface Project {
   tags?: string[];
 }
 
-export type ProjectTemplate = typeof PROJECT_TEMPLATES[number];
+export type ProjectTemplate = (typeof PROJECT_TEMPLATES)[number];
 
 export interface ProjectDependencies {
   [name: string]: string;
