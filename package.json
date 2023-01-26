@@ -1,6 +1,6 @@
 {
   "name": "@stackblitz/sdk",
-  "version": "1.8.1",
+  "version": "1.8.2",
   "description": "SDK for generating and embedding StackBlitz projects.",
   "license": "MIT",
   "author": "Eric Simons",
