@@ -34,17 +34,18 @@
   "devDependencies": {
     "@playwright/test": "^1.30.0",
     "@rollup/plugin-replace": "^5.0.2",
+    "@types/body-parser": "^1.19.2",
     "@types/lodash": "^4.14.191",
-    "@vitest/coverage-c8": "^0.28.2",
-    "@vitest/ui": "^0.28.2",
+    "@vitest/coverage-c8": "^0.28.4",
+    "@vitest/ui": "^0.28.4",
     "body-parser": "^1.20.1",
-    "happy-dom": "^8.1.5",
+    "happy-dom": "^8.2.6",
     "lodash": "^4.17.21",
     "prettier": "^2.8.3",
     "rimraf": "^4.1.2",
     "typescript": "~4.4.4",
-    "vite": "^4.0.4",
+    "vite": "^4.1.1",
     "vite-tsconfig-paths": "^4.0.5",
-    "vitest": "^0.28.2"
+    "vitest": "^0.28.4"
   }
 }

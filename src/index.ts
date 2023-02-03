@@ -25,11 +25,7 @@ export type {
 } from './interfaces';
 export type { FsDiff, VM } from './vm';
 
-// Export a single object with methods, for compatibility with UMD and CommonJS.
-// Ideally we would also have named exports, but that can create incompatibilities
-// with some bundlers, and microbundle doesn't support it:
-// https://github.com/developit/microbundle/issues/712
-export default {
+const StackBlitzSDK = {
   connect,
   embedGithubProject,
   embedProject,
@@ -38,3 +34,8 @@ export default {
   openProject,
   openProjectId,
 };
+
+// Export a single object with methods, for compatibility with UMD and CommonJS.
+// Ideally we would also have named exports, but that can create incompatibilities
+// with some bundlers. To revisit in v2?
+export default StackBlitzSDK;

@@ -13,12 +13,15 @@ export const CONNECT_MAX_ATTEMPTS = 20;
  */
 export const DEFAULT_FRAME_HEIGHT = 300;
 
+// Local declaration to satisfy TypeScript.
+// Usage of this variable will be replaced at build time,
+// and should not appear in the built bundles and .d.ts files
+declare var __STACKBLITZ_SERVER_ORIGIN__: string | undefined;
+
 /**
  * Origin of the StackBlitz instance
  */
-export const DEFAULT_ORIGIN: string =
-  // @ts-ignore This will be replaced at build time
-  __STACKBLITZ_SERVER_ORIGIN__ || 'https://stackblitz.com';
+export const DEFAULT_ORIGIN: string = __STACKBLITZ_SERVER_ORIGIN__ || 'https://stackblitz.com';
 
 /**
  * List of supported template names.
