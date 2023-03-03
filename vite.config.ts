@@ -46,12 +46,14 @@ function libConfig(): UserConfig {
       },
     },
     esbuild: {
-      minifyIdentifiers: true,
-      minifySyntax: true,
       // Whitespace will not be minified for our ESM build (sdk.m.js)
       // because of this restriction in Vite's esbuild plugin:
       // https://github.com/vitejs/vite/blob/2219427f4224d75f63a1e1a0af61b32c7854604e/packages/vite/src/node/plugins/esbuild.ts#L348-L351
-      minifyWhitespace: true,
+      // Instead of having mixed minified and unminified bundles, let’s ship
+      // unminified bundles because they’re small enough (especially gzipped).
+      minifyIdentifiers: false,
+      minifySyntax: false,
+      minifyWhitespace: false,
     }
   };
 }
