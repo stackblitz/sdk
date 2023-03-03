@@ -107,7 +107,7 @@ describe('replaceAndEmbed', () => {
 
   test('throws with invalid input', () => {
     const target = h('div') as HTMLDivElement;
-    const iframe = h('iframe') as HTMLIFrameElement;
+    const iframe = h('iframe', { src: 'about:blank' }) as HTMLIFrameElement;
 
     expect(() => {
       replaceAndEmbed(target, undefined as any);
