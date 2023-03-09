@@ -138,6 +138,11 @@ export interface OpenOptions extends ProjectOptions {
    * Defaults to `true`; use `false` to open in the current tab.
    */
   newWindow?: boolean;
+  /**
+   * Opens the project with the editor in “zen mode” (minified UI).
+   * Defaults to `false`.
+   */
+  zenMode?: boolean;
 }
 
 export interface EmbedOptions extends ProjectOptions {

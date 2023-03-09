@@ -23,7 +23,8 @@ type ParamName =
   | 'showSidebar'
   | 'terminalHeight'
   | 'theme'
-  | 'view';
+  | 'view'
+  | 'zenMode';
 
 const generators: Record<keyof Options, (value: any) => string> = {
   clickToLoad: (value: Options['clickToLoad']) => trueParam('ctl', value),
@@ -37,6 +38,7 @@ const generators: Record<keyof Options, (value: any) => string> = {
   terminalHeight: (value: Options['terminalHeight']) => percentParam('terminalHeight', value),
   theme: (value: Options['theme']) => enumParam('theme', ['light', 'dark'], value),
   view: (value: Options['view']) => enumParam('view', ['preview', 'editor'], value),
+  zenMode: (value: Options['zenMode']) => trueParam('zenMode', value),
 };
 
 export function buildParams(options: Options = {}): string {

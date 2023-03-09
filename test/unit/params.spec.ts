@@ -89,6 +89,7 @@ describe('buildParams', () => {
         terminalHeight: NaN,
         theme: 'default',
         view: 'default',
+        zenMode: false,
       })
     ).toBe('');
   });
@@ -107,6 +108,7 @@ describe('buildParams', () => {
         terminalHeight: 50,
         theme: 'light',
         view: 'preview',
+        zenMode: true,
       })
     ).toBe(
       `
@@ -122,6 +124,7 @@ describe('buildParams', () => {
         &terminalHeight=50
         &theme=light
         &view=preview
+        &zenMode=1
       `.replace(/\s/g, '')
     );
   });
