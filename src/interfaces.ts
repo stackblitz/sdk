@@ -111,6 +111,14 @@ export interface ProjectOptions {
    */
   showSidebar?: boolean;
   /**
+   * Name of the npm script to run on project load.
+   * 
+   * The name must match an existing key of the `scripts` object in a `package.json` file at the root of the project.
+   * 
+   * Defaults to looking for a `dev` script or a `start` script in WebContainers-based project. Ignored in EngineBlock projects.
+   */
+  startScript?: string;
+  /**
    * Height of the Terminal panel below the editor (as a percentage number).
    *
    * Values such as `0` and `100` may not be applied as-is, but result instead in the minimum or maximum height allowed for the Terminal.
