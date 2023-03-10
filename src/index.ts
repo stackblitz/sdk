@@ -12,11 +12,11 @@ import {
 // so that additions to interfaces don't become a part of our public API by mistake.
 export type {
   Project,
-  ProjectOptions,
   ProjectDependencies,
   ProjectFiles,
   ProjectSettings,
   ProjectTemplate,
+  ProjectOptions,
   EmbedOptions,
   OpenOptions,
   OpenFileOption,

@@ -53,6 +53,35 @@ export interface ProjectSettings {
 
 export interface ProjectOptions {
   /**
+   * Show a UI dialog asking users to click a button to run the project.
+   */
+  clickToLoad?: boolean;
+  /**
+   * Height of the Console panel below the preview page (as a percentage number, between `0` and `100`).
+   *
+   * By default, the Console will appear collapsed, and can be opened by users.
+   * This option is ignored in WebContainers-based projects.
+   */
+  devToolsHeight?: number;
+  /**
+   * Use the “embed” layout of the editor.
+   *
+   * Defaults to `true` for `embedProject*` methods, and `false` for `openProject*` methods.
+   *
+   * @deprecated May be removed in a future release.
+   */
+  forceEmbedLayout?: boolean;
+  /**
+   * Completely hide the Console panel below the preview page.
+   *
+   * This option is ignored in WebContainers-based projects.
+   */
+  hideDevTools?: boolean;
+  /**
+   * Hide the ActivityBar (sidebar icons).
+   */
+  hideExplorer?: boolean;
+  /**
    * Select one or several project files to open initially.
    *
    * Example usage:
@@ -68,42 +97,11 @@ export interface ProjectOptions {
    */
   openFile?: OpenFileOption;
   /**
-   * Show only the code editor or only the preview page.
+   * Set the origin URL of your StackBlitz EE server.
    *
-   * Defaults to showing both the editor and the preview.
+   * Defaults to `https://stackblitz.com`.
    */
-  view?: UiViewOption;
-  /**
-   * Select the color theme for the editor UI.
-   *
-   * Available themes: `light` and `dark`.
-   */
-  theme?: UiThemeOption;
-  /**
-   * Height of the Terminal panel below the editor (as a percentage number).
-   *
-   * Values such as `0` and `100` may not be applied as-is, but result instead in the minimum or maximum height allowed for the Terminal.
-   *
-   * The Terminal only appears in WebContainers-based projects.
-   */
-  terminalHeight?: number;
-  /**
-   * Height of the Console panel below the preview page (as a percentage number, between `0` and `100`).
-   *
-   * By default, the Console will appear collapsed, and can be opened by users.
-   * This option is ignored in WebContainers-based projects.
-   */
-  devToolsHeight?: number;
-  /**
-   * Completely hide the Console panel below the preview page.
-   *
-   * This option is ignored in WebContainers-based projects.
-   */
-  hideDevTools?: boolean;
-  /**
-   * Hide the ActivityBar (sidebar icons).
-   */
-  hideExplorer?: boolean;
+  origin?: string;
   /**
    * Show the sidebar as open or closed on page load.
    *
@@ -113,23 +111,25 @@ export interface ProjectOptions {
    */
   showSidebar?: boolean;
   /**
-   * Use the “embed” layout of the editor.
+   * Height of the Terminal panel below the editor (as a percentage number).
    *
-   * Defaults to `true` for `embedProject*` methods, and `false` for `openProject*` methods.
+   * Values such as `0` and `100` may not be applied as-is, but result instead in the minimum or maximum height allowed for the Terminal.
    *
-   * @deprecated May be removed in a future release.
+   * The Terminal only appears in WebContainers-based projects.
    */
-  forceEmbedLayout?: boolean;
+  terminalHeight?: number;
   /**
-   * Show a UI dialog asking users to click a button to run the project.
-   */
-  clickToLoad?: boolean;
-  /**
-   * Set the origin URL of your StackBlitz EE server.
+   * Select the color theme for the editor UI.
    *
-   * Defaults to `https://stackblitz.com`.
+   * Available themes: `light` and `dark`.
    */
-  origin?: string;
+  theme?: UiThemeOption;
+  /**
+   * Show only the code editor or only the preview page.
+   *
+   * Defaults to showing both the editor and the preview.
+   */
+  view?: UiViewOption;
 }
 
 export interface OpenOptions extends ProjectOptions {
