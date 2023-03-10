@@ -50,7 +50,7 @@ describe('createProjectForm', () => {
 
     // Check input values
     expect(value('project[title]')).toBe('My Test Project');
-    expect(value('project[description]')).toBe(project.description);
+    expect(value('project[description]')).toBe(undefined);
     expect(value('project[template]')).toBe(project.template);
     expect(value('project[dependencies]')).toBe(JSON.stringify(project.dependencies));
     expect(value('project[settings]')).toBe(JSON.stringify(project.settings));

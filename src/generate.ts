@@ -16,50 +16,56 @@ function createHiddenInput(name: string, value: string) {
  * with custom escape sequences. Important: do not encodeURIComponent the
  * whole path, for compatibility with the StackBlitz backend.
  */
-function bracketedFilePath(path: string) {
-  return `[${path.replace(/\[/g, '%5B').replace(/\]/g, '%5D')}]`;
+function encodeFilePath(path: string) {
+  return path.replace(/\[/g, '%5B').replace(/\]/g, '%5D');
 }
 
-export function createProjectForm(project: Project) {
-  if (!PROJECT_TEMPLATES.includes(project.template)) {
+export function createProjectForm({
+  template,
+  title,
+  description,
+  dependencies,
+  files,
+  settings,
+}: Project) {
+  if (!PROJECT_TEMPLATES.includes(template)) {
     const names = PROJECT_TEMPLATES.map((t) => `'${t}'`).join(', ');
     console.warn(`Unsupported project.template: must be one of ${names}`);
   }
 
-  const isWebContainers = project.template === 'node';
+  const inputs: HTMLInputElement[] = [];
+  const addInput = (name: string, value: string, defaultValue = '') => {
+    inputs.push(createHiddenInput(name, typeof value === 'string' ? value : defaultValue));
+  };
 
-  const form = document.createElement('form');
-  form.method = 'POST';
-  form.setAttribute('style', 'display:none!important;');
+  addInput('project[title]', title);
+  if (typeof description === 'string' && description.length > 0) {
+    addInput('project[description]', description);
+  }
+  addInput('project[template]', template, 'javascript');
 
-  form.appendChild(createHiddenInput('project[title]', project.title));
-  form.appendChild(createHiddenInput('project[description]', project.description));
-  form.appendChild(createHiddenInput('project[template]', project.template));
-
-  if (project.dependencies) {
-    if (isWebContainers) {
+  if (dependencies) {
+    if (template === 'node') {
       console.warn(
         `Invalid project.dependencies: dependencies must be provided as a 'package.json' file when using the 'node' template.`
       );
     } else {
-      form.appendChild(
-        createHiddenInput('project[dependencies]', JSON.stringify(project.dependencies))
-      );
+      addInput('project[dependencies]', JSON.stringify(dependencies));
     }
   }
 
-  if (project.settings) {
-    form.appendChild(createHiddenInput('project[settings]', JSON.stringify(project.settings)));
+  if (settings) {
+    addInput('project[settings]', JSON.stringify(settings));
   }
 
-  Object.keys(project.files).forEach((path) => {
-    const name = 'project[files]' + bracketedFilePath(path);
-    const value = project.files[path];
-    if (typeof value === 'string') {
-      form.appendChild(createHiddenInput(name, value));
-    }
+  Object.entries(files).forEach(([path, contents]) => {
+    addInput(`project[files][${encodeFilePath(path)}]`, contents);
   });
 
+  const form = document.createElement('form');
+  form.method = 'POST';
+  form.setAttribute('style', 'display:none!important;');
+  form.append(...inputs);
   return form;
 }
 

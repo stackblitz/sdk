@@ -2,7 +2,7 @@ import type { PROJECT_TEMPLATES } from './constants';
 
 export interface Project {
   title: string;
-  description: string;
+  description?: string;
   /**
    * The project’s template name tells StackBlitz how to compile and run project files.
    *
