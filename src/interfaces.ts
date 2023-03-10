@@ -54,12 +54,15 @@ export interface ProjectSettings {
 export interface ProjectOptions {
   /**
    * Show a UI dialog asking users to click a button to run the project.
+   * 
+   * Defaults to `false`.
    */
   clickToLoad?: boolean;
   /**
    * Height of the Console panel below the preview page (as a percentage number, between `0` and `100`).
    *
    * By default, the Console will appear collapsed, and can be opened by users.
+   * 
    * This option is ignored in WebContainers-based projects.
    */
   devToolsHeight?: number;
@@ -75,10 +78,14 @@ export interface ProjectOptions {
    * Completely hide the Console panel below the preview page.
    *
    * This option is ignored in WebContainers-based projects.
+   * 
+   * Defaults to `false`.
    */
   hideDevTools?: boolean;
   /**
    * Hide the ActivityBar (sidebar icons).
+   * 
+   * Defaults to `false`.
    */
   hideExplorer?: boolean;
   /**
@@ -113,15 +120,24 @@ export interface ProjectOptions {
   /**
    * Choose the sidebar view to open on project load.
    *
-   * Available views: `project` (default), `search`, `ports` (for WebContainers-based projects only) and `settings`.
+   * Available views: `project` (default), `search`, `ports` (WebContainers only) and `settings`.
    */
   sidebarView?: UiSidebarView;
   /**
-   * Name of the npm script to run on project load.
+   * Name(s) of the npm script(s) to run on project load.
    *
-   * The name must match an existing key of the `scripts` object in a `package.json` file at the root of the project.
+   * Must be a single script name, or a comma-separated list of script names, matching the keys of the `scripts` object in the `package.json` file at the root of the project. Arbitrary shell commands are not supported.
+   * 
+   * Example usage:
+   * 
+   *     // Run the 'build' script after dependencies are installed
+   *     startScript: 'build'
+   * 
+   *     // Run the 'build' script then the 'serve' script, which may look like:
+   *     // `npm install && npm run build && npm run serve`
+   *     startScript: 'build,serve'
    *
-   * Defaults to looking for a `dev` script or a `start` script in WebContainers-based project. Ignored in EngineBlock projects.
+   * Defaults to looking for a `dev` script or a `start` script. Ignored in EngineBlock projects.
    */
   startScript?: string;
   /**
@@ -149,11 +165,13 @@ export interface ProjectOptions {
 export interface OpenOptions extends ProjectOptions {
   /**
    * Opens the project in a new browser tab.
+   *
    * Defaults to `true`; use `false` to open in the current tab.
    */
   newWindow?: boolean;
   /**
-   * Opens the project with the editor in “zen mode” (minified UI).
+   * Opens the project with the editor UI partially hidden (known as “zen mode”).
+   *
    * Defaults to `false`.
    */
   zenMode?: boolean;
