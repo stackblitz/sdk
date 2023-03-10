@@ -1,5 +1,7 @@
 import type { EmbedOptions, OpenOptions } from './interfaces';
 
+import { UI_SIDEBAR_VIEWS, UI_THEMES, UI_VIEWS } from './constants';
+
 export type ParamOptions = Omit<
   OpenOptions & EmbedOptions,
   'origin' | 'newWindow' | 'height' | 'width'
@@ -29,6 +31,7 @@ type ParamName =
   | 'hideNavigation'
   | 'initialpath'
   | 'showSidebar'
+  | 'sidebarView'
   | 'startScript'
   | 'terminalHeight'
   | 'theme'
@@ -44,10 +47,12 @@ export const generators: Record<keyof ParamOptions, (value: any) => string> = {
   hideNavigation: (value: ParamOptions['hideNavigation']) => trueParam('hideNavigation', value),
   openFile: (value: ParamOptions['openFile']) => stringParams('file', value),
   showSidebar: (value: ParamOptions['showSidebar']) => booleanParam('showSidebar', value),
+  sidebarView: (value: ParamOptions['sidebarView']) =>
+    enumParam('sidebarView', value, UI_SIDEBAR_VIEWS),
   startScript: (value: ParamOptions['startScript']) => stringParams('startScript', value),
   terminalHeight: (value: ParamOptions['terminalHeight']) => percentParam('terminalHeight', value),
-  theme: (value: ParamOptions['theme']) => enumParam('theme', ['light', 'dark'], value),
-  view: (value: ParamOptions['view']) => enumParam('view', ['preview', 'editor'], value),
+  theme: (value: ParamOptions['theme']) => enumParam('theme', value, UI_THEMES),
+  view: (value: ParamOptions['view']) => enumParam('view', value, UI_VIEWS),
   zenMode: (value: ParamOptions['zenMode']) => trueParam('zenMode', value),
 };
 
@@ -81,14 +86,18 @@ export function booleanParam(name: ParamName, value?: boolean): string {
 export function percentParam(name: ParamName, value?: number): string {
   if (typeof value === 'number' && !Number.isNaN(value)) {
     const clamped = Math.min(100, Math.max(0, value));
-    return `${name}=${Math.round(clamped)}`;
+    return `${name}=${encodeURIComponent(Math.round(clamped))}`;
   }
   return '';
 }
 
-export function enumParam(name: ParamName, oneOf: string[], value?: string): string {
-  if (typeof value === 'string' && oneOf.includes(value)) {
-    return `${name}=${value}`;
+export function enumParam(
+  name: ParamName,
+  value: string = '',
+  allowList: readonly string[] = []
+): string {
+  if (allowList.includes(value)) {
+    return `${name}=${encodeURIComponent(value)}`;
   }
   return '';
 }

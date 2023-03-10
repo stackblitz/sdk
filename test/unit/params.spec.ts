@@ -52,11 +52,11 @@ describe('params formats', () => {
   });
 
   test('enumParam drops invalid options', () => {
-    const options = ['yes', 'no', 'maybe'];
-    expect(enumParam('_test', options)).toBe('');
-    expect(enumParam('_test', options, 'yes')).toBe('_test=yes');
-    expect(enumParam('_test', options, 'nope')).toBe('');
-    expect(enumParam('_test', options, 'maybe')).toBe('_test=maybe');
+    const options = ['yes', 'no', 'maybe?'];
+    expect(enumParam('_test')).toBe('');
+    expect(enumParam('_test', 'yes', options)).toBe('_test=yes');
+    expect(enumParam('_test', 'nope', options)).toBe('');
+    expect(enumParam('_test', 'maybe?', options)).toBe('_test=maybe%3F');
   });
 });
 
@@ -85,6 +85,7 @@ describe('buildParams', () => {
       hideNavigation: false,
       openFile: '',
       showSidebar: undefined,
+      sidebarView: 'default',
       startScript: undefined,
       terminalHeight: NaN,
       theme: 'default',
@@ -107,6 +108,7 @@ describe('buildParams', () => {
       hideNavigation: true,
       openFile: ['src/index.js,src/styles.css', 'package.json'],
       showSidebar: true,
+      sidebarView: 'search',
       startScript: 'dev:serve',
       terminalHeight: 50,
       theme: 'light',
@@ -117,21 +119,24 @@ describe('buildParams', () => {
     expect(Object.keys(options).sort()).toStrictEqual(Object.keys(generators).sort());
     // Check that all values end up in the query string
     // (Comparing sorted arrays instead of strings to make failures readable.)
-    expect(buildParams(options).split('&').sort()).toStrictEqual([
-      '?ctl=1',
-      'devtoolsheight=100',
-      'embed=1',
-      'hidedevtools=1',
-      'hideExplorer=1',
-      'hideNavigation=1',
-      'file=src%2Findex.js%2Csrc%2Fstyles.css',
-      'file=package.json',
-      'showSidebar=1',
-      'startScript=dev%3Aserve',
-      'terminalHeight=50',
-      'theme=light',
-      'view=preview',
-      'zenMode=1',
-    ].sort());
+    expect(buildParams(options).split('&').sort()).toStrictEqual(
+      [
+        '?ctl=1',
+        'devtoolsheight=100',
+        'embed=1',
+        'hidedevtools=1',
+        'hideExplorer=1',
+        'hideNavigation=1',
+        'file=src%2Findex.js%2Csrc%2Fstyles.css',
+        'file=package.json',
+        'showSidebar=1',
+        'sidebarView=search',
+        'startScript=dev%3Aserve',
+        'terminalHeight=50',
+        'theme=light',
+        'view=preview',
+        'zenMode=1',
+      ].sort()
+    );
   });
 });

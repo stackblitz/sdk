@@ -1,4 +1,4 @@
-import type { PROJECT_TEMPLATES } from './constants';
+import type { PROJECT_TEMPLATES, UI_SIDEBAR_VIEWS, UI_THEMES, UI_VIEWS } from './constants';
 
 export interface Project {
   title: string;
@@ -111,10 +111,16 @@ export interface ProjectOptions {
    */
   showSidebar?: boolean;
   /**
+   * Choose the sidebar view to open on project load.
+   *
+   * Available views: `project` (default), `search`, `ports` (for WebContainers-based projects only) and `settings`.
+   */
+  sidebarView?: UiSidebarView;
+  /**
    * Name of the npm script to run on project load.
-   * 
+   *
    * The name must match an existing key of the `scripts` object in a `package.json` file at the root of the project.
-   * 
+   *
    * Defaults to looking for a `dev` script or a `start` script in WebContainers-based project. Ignored in EngineBlock projects.
    */
   startScript?: string;
@@ -129,7 +135,7 @@ export interface ProjectOptions {
   /**
    * Select the color theme for the editor UI.
    *
-   * Available themes: `light` and `dark`.
+   * Available themes: `dark` (default) and `light`.
    */
   theme?: UiThemeOption;
   /**
@@ -170,6 +176,8 @@ export interface EmbedOptions extends ProjectOptions {
 
 export type OpenFileOption = string | string[];
 
-export type UiViewOption = 'default' | 'preview' | 'editor';
+export type UiSidebarView = 'default' | (typeof UI_SIDEBAR_VIEWS)[number];
 
-export type UiThemeOption = 'default' | 'light' | 'dark';
+export type UiThemeOption = 'default' | (typeof UI_THEMES)[number];
+
+export type UiViewOption = 'default' | (typeof UI_VIEWS)[number];
