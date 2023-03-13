@@ -5,7 +5,7 @@ exports[`createProjectFrameHTML > generates a HTML document string 1`] = `
 <html>
 <head><title></title></head>
 <body>
-  <form method=\\"POST\\" style=\\"display:none!important;\\" action=\\"https://stackblitz.com/run?embed=1\\" id=\\"sb_run\\"><input type=\\"hidden\\" name=\\"project[title]\\" value=\\"Test Project\\"><input type=\\"hidden\\" name=\\"project[description]\\" value=\\"This is a test\\"><input type=\\"hidden\\" name=\\"project[template]\\" value=\\"javascript\\"><input type=\\"hidden\\" name=\\"project[files][package.json]\\" value=\\"{
+  <form method=\\"POST\\" style=\\"display:none!important;\\" action=\\"https://stackblitz.com/run?embed=1\\" id=\\"sb_run\\"><input type=\\"hidden\\" name=\\"project[title]\\" value=\\"Test Project\\"><input type=\\"hidden\\" name=\\"project[template]\\" value=\\"javascript\\"><input type=\\"hidden\\" name=\\"project[files][package.json]\\" value=\\"{
   &quot;dependencies&quot;: {&quot;cowsay&quot;: &quot;1.5.0&quot;}
 }\\"><input type=\\"hidden\\" name=\\"project[files][index.js]\\" value=\\"import cowsay from &#x27;cowsay&#x27;;
 console.log(cowsay(&#x27;Hello world!&#x27;));

@@ -2,7 +2,7 @@ import type { PROJECT_TEMPLATES, UI_SIDEBAR_VIEWS, UI_THEMES, UI_VIEWS } from '.
 
 export interface Project {
   title: string;
-  description: string;
+  description?: string;
   /**
    * The project’s template name tells StackBlitz how to compile and run project files.
    *

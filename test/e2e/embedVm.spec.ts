@@ -7,7 +7,6 @@ test('vm.getFsSnapshot and vm.applyFsDiff', async ({ page }) => {
   const project: Project = {
     title: 'Test Project',
     template: 'html',
-    description: '',
     files: {
       'index.html': `<h1>Hello World</h1>`,
       'styles.css': `body { color: lime }`,
