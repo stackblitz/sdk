@@ -1,4 +1,4 @@
-import type { PROJECT_TEMPLATES } from './constants';
+import type { PROJECT_TEMPLATES, UI_SIDEBAR_VIEWS, UI_THEMES, UI_VIEWS } from './constants';
 
 export interface Project {
   title: string;
@@ -53,6 +53,42 @@ export interface ProjectSettings {
 
 export interface ProjectOptions {
   /**
+   * Show a UI dialog asking users to click a button to run the project.
+   * 
+   * Defaults to `false`.
+   */
+  clickToLoad?: boolean;
+  /**
+   * Height of the Console panel below the preview page (as a percentage number, between `0` and `100`).
+   *
+   * By default, the Console will appear collapsed, and can be opened by users.
+   * 
+   * This option is ignored in WebContainers-based projects.
+   */
+  devToolsHeight?: number;
+  /**
+   * Use the “embed” layout of the editor.
+   *
+   * Defaults to `true` for `embedProject*` methods, and `false` for `openProject*` methods.
+   *
+   * @deprecated May be removed in a future release.
+   */
+  forceEmbedLayout?: boolean;
+  /**
+   * Completely hide the Console panel below the preview page.
+   *
+   * This option is ignored in WebContainers-based projects.
+   * 
+   * Defaults to `false`.
+   */
+  hideDevTools?: boolean;
+  /**
+   * Hide the ActivityBar (sidebar icons).
+   * 
+   * Defaults to `false`.
+   */
+  hideExplorer?: boolean;
+  /**
    * Select one or several project files to open initially.
    *
    * Example usage:
@@ -68,42 +104,11 @@ export interface ProjectOptions {
    */
   openFile?: OpenFileOption;
   /**
-   * Show only the code editor or only the preview page.
+   * Set the origin URL of your StackBlitz EE server.
    *
-   * Defaults to showing both the editor and the preview.
+   * Defaults to `https://stackblitz.com`.
    */
-  view?: UiViewOption;
-  /**
-   * Select the color theme for the editor UI.
-   *
-   * Available themes: `light` and `dark`.
-   */
-  theme?: UiThemeOption;
-  /**
-   * Height of the Terminal panel below the editor (as a percentage number).
-   *
-   * Values such as `0` and `100` may not be applied as-is, but result instead in the minimum or maximum height allowed for the Terminal.
-   *
-   * The Terminal only appears in WebContainers-based projects.
-   */
-  terminalHeight?: number;
-  /**
-   * Height of the Console panel below the preview page (as a percentage number, between `0` and `100`).
-   *
-   * By default, the Console will appear collapsed, and can be opened by users.
-   * This option is ignored in WebContainers-based projects.
-   */
-  devToolsHeight?: number;
-  /**
-   * Completely hide the Console panel below the preview page.
-   *
-   * This option is ignored in WebContainers-based projects.
-   */
-  hideDevTools?: boolean;
-  /**
-   * Hide the ActivityBar (sidebar icons).
-   */
-  hideExplorer?: boolean;
+  origin?: string;
   /**
    * Show the sidebar as open or closed on page load.
    *
@@ -113,31 +118,63 @@ export interface ProjectOptions {
    */
   showSidebar?: boolean;
   /**
-   * Use the “embed” layout of the editor.
+   * Choose the sidebar view to open on project load.
    *
-   * Defaults to `true` for `embedProject*` methods, and `false` for `openProject*` methods.
-   *
-   * @deprecated May be removed in a future release.
+   * Available views: `project` (default), `search`, `ports` (WebContainers only) and `settings`.
    */
-  forceEmbedLayout?: boolean;
+  sidebarView?: UiSidebarView;
   /**
-   * Show a UI dialog asking users to click a button to run the project.
-   */
-  clickToLoad?: boolean;
-  /**
-   * Set the origin URL of your StackBlitz EE server.
+   * Name(s) of the npm script(s) to run on project load.
    *
-   * Defaults to `https://stackblitz.com`.
+   * Must be a single script name, or a comma-separated list of script names, matching the keys of the `scripts` object in the `package.json` file at the root of the project. Arbitrary shell commands are not supported.
+   * 
+   * Example usage:
+   * 
+   *     // Run the 'build' script after dependencies are installed
+   *     startScript: 'build'
+   * 
+   *     // Run the 'build' script then the 'serve' script, which may look like:
+   *     // `npm install && npm run build && npm run serve`
+   *     startScript: 'build,serve'
+   *
+   * Defaults to looking for a `dev` script or a `start` script. Ignored in EngineBlock projects.
    */
-  origin?: string;
+  startScript?: string;
+  /**
+   * Height of the Terminal panel below the editor (as a percentage number).
+   *
+   * Values such as `0` and `100` may not be applied as-is, but result instead in the minimum or maximum height allowed for the Terminal.
+   *
+   * The Terminal only appears in WebContainers-based projects.
+   */
+  terminalHeight?: number;
+  /**
+   * Select the color theme for the editor UI.
+   *
+   * Available themes: `dark` (default) and `light`.
+   */
+  theme?: UiThemeOption;
+  /**
+   * Show only the code editor or only the preview page.
+   *
+   * Defaults to showing both the editor and the preview.
+   */
+  view?: UiViewOption;
 }
 
 export interface OpenOptions extends ProjectOptions {
   /**
    * Opens the project in a new browser tab.
+   *
    * Defaults to `true`; use `false` to open in the current tab.
    */
   newWindow?: boolean;
+  /**
+   * Opens the project with the editor UI partially hidden (known as “zen mode”).
+   *
+   * Defaults to `false`.
+   */
+  zenMode?: boolean;
 }
 
 export interface EmbedOptions extends ProjectOptions {
@@ -157,6 +194,8 @@ export interface EmbedOptions extends ProjectOptions {
 
 export type OpenFileOption = string | string[];
 
-export type UiViewOption = 'default' | 'preview' | 'editor';
+export type UiSidebarView = 'default' | (typeof UI_SIDEBAR_VIEWS)[number];
 
-export type UiThemeOption = 'default' | 'light' | 'dark';
+export type UiThemeOption = 'default' | (typeof UI_THEMES)[number];
+
+export type UiViewOption = 'default' | (typeof UI_VIEWS)[number];

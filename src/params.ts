@@ -1,13 +1,23 @@
 import type { EmbedOptions, OpenOptions } from './interfaces';
 
-type Options = Omit<OpenOptions & EmbedOptions, 'origin' | 'newWindow' | 'height' | 'width'>;
+import { UI_SIDEBAR_VIEWS, UI_THEMES, UI_VIEWS } from './constants';
+
+export type ParamOptions = Omit<
+  OpenOptions & EmbedOptions,
+  'origin' | 'newWindow' | 'height' | 'width'
+>;
 
 /**
  * URL parameter names supported by the StackBlitz instance.
- * Note that while updated instances perform a case-insensitive lookup
- * for query parameters, some Enterprise Edition deployments may not,
- * and we need to use specific (and sometimes inconsistent) casing;
- * see for example 'hidedevtools' vs 'hideNavigation'.
+ *
+ * A couple notes:
+ *
+ * - Names don't always match the keys in EmbedOptions / OpenOptions.
+ *   For example, options use `openFile` but the expected param is `file`.
+ * - While updated instances perform a case-insensitive lookup for query
+ *   parameters, some Enterprise Edition deployments may not, and we need to
+ *   use specific (and sometimes inconsistent) casing; see for example
+ *   'hidedevtools' vs 'hideNavigation'.
  */
 type ParamName =
   | '_test'
@@ -21,29 +31,36 @@ type ParamName =
   | 'hideNavigation'
   | 'initialpath'
   | 'showSidebar'
+  | 'sidebarView'
+  | 'startScript'
   | 'terminalHeight'
   | 'theme'
-  | 'view';
+  | 'view'
+  | 'zenMode';
 
-const generators: Record<keyof Options, (value: any) => string> = {
-  clickToLoad: (value: Options['clickToLoad']) => trueParam('ctl', value),
-  devToolsHeight: (value: Options['devToolsHeight']) => percentParam('devtoolsheight', value),
-  forceEmbedLayout: (value: Options['forceEmbedLayout']) => trueParam('embed', value),
-  hideDevTools: (value: Options['hideDevTools']) => trueParam('hidedevtools', value),
-  hideExplorer: (value: Options['hideExplorer']) => trueParam('hideExplorer', value),
-  hideNavigation: (value: Options['hideNavigation']) => trueParam('hideNavigation', value),
-  showSidebar: (value: Options['showSidebar']) => booleanParam('showSidebar', value),
-  openFile: (value: Options['openFile']) => stringParams('file', value).join('&'),
-  terminalHeight: (value: Options['terminalHeight']) => percentParam('terminalHeight', value),
-  theme: (value: Options['theme']) => enumParam('theme', ['light', 'dark'], value),
-  view: (value: Options['view']) => enumParam('view', ['preview', 'editor'], value),
+export const generators: Record<keyof ParamOptions, (value: any) => string> = {
+  clickToLoad: (value: ParamOptions['clickToLoad']) => trueParam('ctl', value),
+  devToolsHeight: (value: ParamOptions['devToolsHeight']) => percentParam('devtoolsheight', value),
+  forceEmbedLayout: (value: ParamOptions['forceEmbedLayout']) => trueParam('embed', value),
+  hideDevTools: (value: ParamOptions['hideDevTools']) => trueParam('hidedevtools', value),
+  hideExplorer: (value: ParamOptions['hideExplorer']) => trueParam('hideExplorer', value),
+  hideNavigation: (value: ParamOptions['hideNavigation']) => trueParam('hideNavigation', value),
+  openFile: (value: ParamOptions['openFile']) => stringParams('file', value),
+  showSidebar: (value: ParamOptions['showSidebar']) => booleanParam('showSidebar', value),
+  sidebarView: (value: ParamOptions['sidebarView']) =>
+    enumParam('sidebarView', value, UI_SIDEBAR_VIEWS),
+  startScript: (value: ParamOptions['startScript']) => stringParams('startScript', value),
+  terminalHeight: (value: ParamOptions['terminalHeight']) => percentParam('terminalHeight', value),
+  theme: (value: ParamOptions['theme']) => enumParam('theme', value, UI_THEMES),
+  view: (value: ParamOptions['view']) => enumParam('view', value, UI_VIEWS),
+  zenMode: (value: ParamOptions['zenMode']) => trueParam('zenMode', value),
 };
 
-export function buildParams(options: Options = {}): string {
+export function buildParams(options: ParamOptions = {}): string {
   const params: string[] = Object.entries(options)
     .map(([key, value]) => {
       if (value != null && generators.hasOwnProperty(key)) {
-        return generators[key as keyof Options](value);
+        return generators[key as keyof ParamOptions](value);
       }
       return '';
     })
@@ -69,21 +86,26 @@ export function booleanParam(name: ParamName, value?: boolean): string {
 export function percentParam(name: ParamName, value?: number): string {
   if (typeof value === 'number' && !Number.isNaN(value)) {
     const clamped = Math.min(100, Math.max(0, value));
-    return `${name}=${Math.round(clamped)}`;
+    return `${name}=${encodeURIComponent(Math.round(clamped))}`;
   }
   return '';
 }
 
-export function enumParam(name: ParamName, oneOf: string[], value?: string) {
-  if (typeof value === 'string' && oneOf.includes(value)) {
-    return `${name}=${value}`;
+export function enumParam(
+  name: ParamName,
+  value: string = '',
+  allowList: readonly string[] = []
+): string {
+  if (allowList.includes(value)) {
+    return `${name}=${encodeURIComponent(value)}`;
   }
   return '';
 }
 
-export function stringParams(name: ParamName, value?: string | string[]): string[] {
+export function stringParams(name: ParamName, value?: string | string[]): string {
   const values = Array.isArray(value) ? value : [value];
   return values
     .filter((val) => typeof val === 'string' && val.trim() !== '')
-    .map((val) => `${name}=${encodeURIComponent(val!.trim())}`);
+    .map((val) => `${name}=${encodeURIComponent(val!)}`)
+    .join('&');
 }

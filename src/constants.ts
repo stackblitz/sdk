@@ -36,3 +36,18 @@ export const PROJECT_TEMPLATES = [
   'typescript',
   'vue',
 ] as const;
+
+/**
+ * Supported sidebar views
+ */
+export const UI_SIDEBAR_VIEWS = ['project', 'search', 'ports', 'settings'] as const;
+
+/**
+ * Supported editor themes
+ */
+export const UI_THEMES = ['light', 'dark'] as const;
+
+/**
+ * Supported editor view modes
+ */
+export const UI_VIEWS = ['editor', 'preview'] as const;

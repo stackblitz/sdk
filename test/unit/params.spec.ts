@@ -1,9 +1,11 @@
 import { describe, expect, test } from 'vitest';
 
 import {
+  ParamOptions,
   booleanParam,
   buildParams,
   enumParam,
+  generators,
   percentParam,
   stringParams,
   trueParam,
@@ -41,22 +43,20 @@ describe('params formats', () => {
   });
 
   test('stringParams', () => {
-    expect(stringParams('_test', '')).toStrictEqual([]);
-    expect(stringParams('_test', 'hello')).toStrictEqual(['_test=hello']);
-    expect(stringParams('_test', 'a/../b?c&d')).toStrictEqual(['_test=a%2F..%2Fb%3Fc%26d']);
-    expect(stringParams('_test', ['hello', 'beautiful', 'world'])).toStrictEqual([
-      '_test=hello',
-      '_test=beautiful',
-      '_test=world',
-    ]);
+    expect(stringParams('_test', '')).toBe('');
+    expect(stringParams('_test', 'hello')).toBe('_test=hello');
+    expect(stringParams('_test', 'a/../b?c&d')).toBe('_test=a%2F..%2Fb%3Fc%26d');
+    expect(stringParams('_test', ['hello', 'beautiful', 'world'])).toBe(
+      '_test=hello&_test=beautiful&_test=world'
+    );
   });
 
   test('enumParam drops invalid options', () => {
-    const options = ['yes', 'no', 'maybe'];
-    expect(enumParam('_test', options)).toBe('');
-    expect(enumParam('_test', options, 'yes')).toBe('_test=yes');
-    expect(enumParam('_test', options, 'nope')).toBe('');
-    expect(enumParam('_test', options, 'maybe')).toBe('_test=maybe');
+    const options = ['yes', 'no', 'maybe?'];
+    expect(enumParam('_test')).toBe('');
+    expect(enumParam('_test', 'yes', options)).toBe('_test=yes');
+    expect(enumParam('_test', 'nope', options)).toBe('');
+    expect(enumParam('_test', 'maybe?', options)).toBe('_test=maybe%3F');
   });
 });
 
@@ -76,53 +76,67 @@ describe('buildParams', () => {
   });
 
   test('doesn’t output undefined or default values', () => {
-    expect(
-      buildParams({
-        clickToLoad: false,
-        devToolsHeight: NaN,
-        forceEmbedLayout: false,
-        hideDevTools: false,
-        hideExplorer: false,
-        hideNavigation: false,
-        openFile: '',
-        showSidebar: undefined,
-        terminalHeight: NaN,
-        theme: 'default',
-        view: 'default',
-      })
-    ).toBe('');
+    const options: ParamOptions = {
+      clickToLoad: false,
+      devToolsHeight: NaN,
+      forceEmbedLayout: false,
+      hideDevTools: false,
+      hideExplorer: false,
+      hideNavigation: false,
+      openFile: '',
+      showSidebar: undefined,
+      sidebarView: 'default',
+      startScript: undefined,
+      terminalHeight: NaN,
+      theme: 'default',
+      view: 'default',
+      zenMode: false,
+    };
+    // Check that we are testing all options
+    expect(Object.keys(options).sort()).toStrictEqual(Object.keys(generators).sort());
+    // Check that default and undefined values don't output anything
+    expect(buildParams(options)).toBe('');
   });
 
   test('outputs non-default values for known options', () => {
-    expect(
-      buildParams({
-        clickToLoad: true,
-        devToolsHeight: 100,
-        forceEmbedLayout: true,
-        hideDevTools: true,
-        hideExplorer: true,
-        hideNavigation: true,
-        showSidebar: true,
-        openFile: ['src/index.js,src/styles.css', 'package.json'],
-        terminalHeight: 50,
-        theme: 'light',
-        view: 'preview',
-      })
-    ).toBe(
-      `
-        ?ctl=1
-        &devtoolsheight=100
-        &embed=1
-        &hidedevtools=1
-        &hideExplorer=1
-        &hideNavigation=1
-        &showSidebar=1
-        &file=src%2Findex.js%2Csrc%2Fstyles.css
-        &file=package.json
-        &terminalHeight=50
-        &theme=light
-        &view=preview
-      `.replace(/\s/g, '')
+    const options: ParamOptions = {
+      clickToLoad: true,
+      devToolsHeight: 100,
+      forceEmbedLayout: true,
+      hideDevTools: true,
+      hideExplorer: true,
+      hideNavigation: true,
+      openFile: ['src/index.js,src/styles.css', 'package.json'],
+      showSidebar: true,
+      sidebarView: 'search',
+      startScript: 'dev:serve',
+      terminalHeight: 50,
+      theme: 'light',
+      view: 'preview',
+      zenMode: true,
+    };
+    // Check that we are testing all options
+    expect(Object.keys(options).sort()).toStrictEqual(Object.keys(generators).sort());
+    // Check that all values end up in the query string
+    // (Comparing sorted arrays instead of strings to make failures readable.)
+    expect(buildParams(options).split('&').sort()).toStrictEqual(
+      [
+        '?ctl=1',
+        'devtoolsheight=100',
+        'embed=1',
+        'hidedevtools=1',
+        'hideExplorer=1',
+        'hideNavigation=1',
+        'file=src%2Findex.js%2Csrc%2Fstyles.css',
+        'file=package.json',
+        'showSidebar=1',
+        'sidebarView=search',
+        'startScript=dev%3Aserve',
+        'terminalHeight=50',
+        'theme=light',
+        'view=preview',
+        'zenMode=1',
+      ].sort()
     );
   });
 });
