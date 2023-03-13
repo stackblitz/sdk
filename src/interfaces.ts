@@ -54,7 +54,7 @@ export interface ProjectSettings {
 export interface ProjectOptions {
   /**
    * Show a UI dialog asking users to click a button to run the project.
-   * 
+   *
    * Defaults to `false`.
    */
   clickToLoad?: boolean;
@@ -62,7 +62,7 @@ export interface ProjectOptions {
    * Height of the Console panel below the preview page (as a percentage number, between `0` and `100`).
    *
    * By default, the Console will appear collapsed, and can be opened by users.
-   * 
+   *
    * This option is ignored in WebContainers-based projects.
    */
   devToolsHeight?: number;
@@ -78,13 +78,13 @@ export interface ProjectOptions {
    * Completely hide the Console panel below the preview page.
    *
    * This option is ignored in WebContainers-based projects.
-   * 
+   *
    * Defaults to `false`.
    */
   hideDevTools?: boolean;
   /**
    * Hide the ActivityBar (sidebar icons).
-   * 
+   *
    * Defaults to `false`.
    */
   hideExplorer?: boolean;
@@ -127,12 +127,12 @@ export interface ProjectOptions {
    * Name(s) of the npm script(s) to run on project load.
    *
    * Must be a single script name, or a comma-separated list of script names, matching the keys of the `scripts` object in the `package.json` file at the root of the project. Arbitrary shell commands are not supported.
-   * 
+   *
    * Example usage:
-   * 
+   *
    *     // Run the 'build' script after dependencies are installed
    *     startScript: 'build'
-   * 
+   *
    *     // Run the 'build' script then the 'serve' script, which may look like:
    *     // `npm install && npm run build && npm run serve`
    *     startScript: 'build,serve'

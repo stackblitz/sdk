@@ -54,7 +54,7 @@ function libConfig(): UserConfig {
       minifyIdentifiers: false,
       minifySyntax: false,
       minifyWhitespace: false,
-    }
+    },
   };
 }
 

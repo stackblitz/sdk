@@ -1,5 +1,11 @@
 # @stackblitz/sdk changelog
 
+## v1.9.0 (unreleased)
+
+- Moved the StackBlitz SDK to a dedicated repository: https://github.com/stackblitz/sdk.
+- Added support for new options: `startScript`, `sidebarView` and `zenMode`. (https://github.com/stackblitz/sdk/pull/4)
+- Changed `project.description` to be optional. (https://github.com/stackblitz/sdk/pull/5)
+
 ## v1.8.2 (2023-01-26)
 
 - Fixed using the characters `[]` in file paths with the `embedProject` and `openProject` methods. (https://github.com/stackblitz/core/pull/2295)
