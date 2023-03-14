@@ -23,18 +23,21 @@ We use `npm` and Node 16+.
 # Install dependencies
 npm install
 
-# Generate the 'bundles' and 'types' folders
-npm run build
+# Start a development server to explore examples
+npm start
 
-# Run all tests
+# Run unit tests
 npm test
 
 # Run unit tests with coverage report
-npm run test -- --coverage
+npm test -- --coverage
 
 # Run end-to-end tests with mock server
-npm run e2e
+npm run test:e2e
 
 # Run end-to-end tests against stackblitz.com
-STACKBLITZ_SERVER_ORIGIN=https://stackblitz.com npm run e2e
+STACKBLITZ_SERVER_ORIGIN=https://stackblitz.com npm run test:e2e
+
+# Generate the 'bundles' and 'types' folders
+npm run build
 ```
