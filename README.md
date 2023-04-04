@@ -29,9 +29,6 @@ npm start
 # Run unit tests
 npm test
 
-# Run unit tests with coverage report
-npm test -- --coverage
-
 # Run end-to-end tests with mock server
 npm run test:e2e
 
