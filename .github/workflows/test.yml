@@ -16,7 +16,7 @@ jobs:
         with: { node-version: '18' }
       - run: npm ci
       - name: Run tests
-        run: npm test
+        run: npm run test:unit
       - name: Build bundles
         run: npm run build
   test_e2e:
