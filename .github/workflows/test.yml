@@ -15,10 +15,8 @@ jobs:
       - uses: actions/setup-node@v3
         with: { node-version: '18' }
       - run: npm ci
-      - name: Run tests
-        run: npm test
-      - name: Build bundles
-        run: npm run build
+      - run: npm run build
+      - run: npm run test:unit
   test_e2e:
     name: End-to-end tests
     runs-on: ubuntu-latest
@@ -27,7 +25,5 @@ jobs:
       - uses: actions/setup-node@v3
         with: { node-version: '18' }
       - run: npm ci
-      - name: Install playwright browsers
-        run: npx playwright install chromium --with-deps
-      - name: Run tests
-        run: npm run test:e2e
+      - run: npx playwright install chromium --with-deps
+      - run: npm run test:e2e

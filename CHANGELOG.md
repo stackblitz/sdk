@@ -1,6 +1,6 @@
 # @stackblitz/sdk changelog
 
-## v1.9.0 (unreleased)
+## v1.9.0 (2023-04-04)
 
 - Moved the StackBlitz SDK to a dedicated repository: https://github.com/stackblitz/sdk.
 - Added support for new options: `startScript`, `sidebarView` and `zenMode`. (https://github.com/stackblitz/sdk/pull/4)

@@ -32,7 +32,6 @@ const config: PlaywrightTestConfig = {
   ],
   use: {
     actionTimeout: 0,
-    //baseURL: 'http://localhost:4001',
     trace: 'on-first-retry',
   },
   webServer: {
