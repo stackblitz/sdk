@@ -94,6 +94,9 @@ function testConfig(mode: string): UserConfig {
     server: {
       port: isE2E ? 4001 : 4000,
       hmr: !isE2E,
+      headers: {
+        'Cross-Origin-Resource-Policy': 'cross-origin',
+      },
     },
     test: {
       dir: 'test',
