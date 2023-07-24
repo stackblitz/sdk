@@ -5,7 +5,7 @@ import { RDC } from '$src/rdc';
 function getRdc({ error, delay }: { error?: string; delay?: number } = {}) {
   const channel = new MessageChannel();
 
-  const rdc = new RDC(channel.port2);
+  const rdc = new RDC(channel.port2, 1000);
 
   if(delay === Infinity){
     return rdc;
@@ -71,7 +71,7 @@ describe('RDC', () => {
     ).resolves.toBe(null);
   });
 
-  test.skip('never receives a value', async () => {
+  test('never receives a value', async () => {
     const rdc = getRdc({ delay: Infinity });
     await expect(
       rdc.request({

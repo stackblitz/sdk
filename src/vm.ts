@@ -18,7 +18,7 @@ export class VM {
   private _rdc: RDC;
 
   constructor(port: MessagePort, config: { previewOrigin?: string }) {
-    this._rdc = new RDC(port);
+    this._rdc = new RDC(port, 5000);
 
     Object.defineProperty(this.preview, 'origin', {
       value: typeof config.previewOrigin === 'string' ? config.previewOrigin : null,

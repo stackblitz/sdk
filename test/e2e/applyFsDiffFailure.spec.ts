@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 import type { Project } from '@stackblitz/sdk';
 
-test.skip('vm.getFsSnapshot and failing vm.applyFsDiff', async ({ page }) => {
+test('vm.getFsSnapshot and failing vm.applyFsDiff', async ({ page }) => {
     await page.goto('/test/pages/blank.html');
 
     const project: Project = {
