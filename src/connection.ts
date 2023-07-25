@@ -1,6 +1,7 @@
 import { CONNECT_INTERVAL, CONNECT_MAX_ATTEMPTS } from './constants';
 import { genID } from './helpers';
 import { VM } from './vm';
+import type { VMOptions } from './interfaces';
 
 const connections: Connection[] = [];
 
@@ -10,13 +11,13 @@ export class Connection {
   pending: Promise<VM>;
   vm?: VM;
 
-  constructor(element: HTMLIFrameElement) {
+  constructor(element: HTMLIFrameElement, options?: VMOptions) {
     this.id = genID();
     this.element = element;
     this.pending = new Promise<VM>((resolve, reject) => {
       const listenForSuccess = ({ data, ports }: MessageEvent) => {
         if (data?.action === 'SDK_INIT_SUCCESS' && data.id === this.id) {
-          this.vm = new VM(ports[0], data.payload);
+          this.vm = new VM(ports[0], {...data.payload, ...(options || {})});
           resolve(this.vm);
           cleanup();
         }

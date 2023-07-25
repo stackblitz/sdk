@@ -1,4 +1,5 @@
 import type { PROJECT_TEMPLATES, UI_SIDEBAR_VIEWS, UI_THEMES, UI_VIEWS } from './constants';
+import type { VM } from './vm'
 
 export interface Project {
   title: string;
@@ -49,6 +50,18 @@ export interface ProjectSettings {
     action?: 'hmr' | 'refresh' | string;
     clearConsole?: boolean;
   };
+}
+
+/**
+ * @typedef { VM } VM
+ */
+export interface VMOptions {
+  /**
+   * Time (in milliseconds) until a call to one of a {@link VM}'s methods will be considered to have failed, and the returned Promise rejected.
+   * 
+   * Defaults to 5000 (5 seconds).
+   */
+  requestTimeout?: number;
 }
 
 export interface ProjectOptions {
@@ -183,7 +196,7 @@ export interface OpenOptions extends ProjectOptions {
   zenMode?: boolean;
 }
 
-export interface EmbedOptions extends ProjectOptions {
+export interface EmbedOptions extends ProjectOptions, VMOptions {
   /**
    * Height of the embed iframe
    */

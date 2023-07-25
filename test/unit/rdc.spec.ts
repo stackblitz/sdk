@@ -5,12 +5,18 @@ import { RDC } from '$src/rdc';
 function getRdc({ error, delay }: { error?: string; delay?: number } = {}) {
   const channel = new MessageChannel();
 
+  const rdc = new RDC(channel.port2, 1000);
+
+  if(delay === Infinity){
+    return rdc;
+  }
+
   channel.port1.onmessage = function (event) {
     const message = getResponseMessage({ ...event.data, error });
     setTimeout(() => this.postMessage(message), delay);
   };
 
-  return new RDC(channel.port2);
+  return rdc;
 }
 
 function getResponseMessage({
@@ -63,6 +69,18 @@ describe('RDC', () => {
         payload: {},
       })
     ).resolves.toBe(null);
+  });
+
+  test('never receives a value', async () => {
+    const rdc = getRdc({ delay: Infinity });
+    await expect(
+      rdc.request({
+        type: 'TEST',
+        payload: {},
+      })
+    ).rejects.toBe(
+      'TEST: request timed out'
+    );
   });
 
   test('receives an error message', async () => {

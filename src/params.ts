@@ -4,7 +4,7 @@ import { UI_SIDEBAR_VIEWS, UI_THEMES, UI_VIEWS } from './constants';
 
 export type ParamOptions = Omit<
   OpenOptions & EmbedOptions,
-  'origin' | 'newWindow' | 'height' | 'width'
+  'origin' | 'newWindow' | 'height' | 'width' | 'requestTimeout'
 >;
 
 /**
