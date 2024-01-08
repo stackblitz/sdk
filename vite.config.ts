@@ -101,7 +101,7 @@ function testConfig(mode: string): UserConfig {
       include: ['**/unit/**/*.spec.ts'],
       exclude: ['**/node_modules/**'],
       coverage: {
-        provider: 'c8',
+        provider: 'v8',
         include: ['**/src/**/*.ts', '**/test/server/**/*.ts'],
         exclude: ['**/node_modules/**'],
         reportsDirectory: 'temp/coverage',

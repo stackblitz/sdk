@@ -149,12 +149,12 @@ describe('vm.getDependencies', () => {
       },
     });
     const vm = await getVm(project);
-    const deps = vm.getDependencies();
+    const deps = await vm.getDependencies();
 
     // We should get dependencies and devDependencies merged, with original version specifiers
-    await expect(deps).resolves.toContain(packageJson.dependencies);
-    await expect(deps).resolves.toContain(packageJson.devDependencies);
-    await expect(deps).resolves.toMatchSnapshot();
+    expect(deps).toMatchObject(packageJson.dependencies);
+    expect(deps).toMatchObject(packageJson.devDependencies);
+    expect(deps).toMatchSnapshot();
   });
 });
 
