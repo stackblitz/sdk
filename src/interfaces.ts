@@ -121,7 +121,7 @@ export interface ProjectOptions {
    * Choose the sidebar view to open on project load.
    *
    * Available views: `project` (default), `search`, `ports` (WebContainers only) and `settings`.
-   * 
+   *
    * @since 1.9.0
    */
   sidebarView?: UiSidebarView;
@@ -140,7 +140,7 @@ export interface ProjectOptions {
    *     startScript: 'build,serve'
    *
    * Defaults to looking for a `dev` script or a `start` script. Ignored in EngineBlock projects.
-   * 
+   *
    * @since 1.9.0
    */
   startScript?: string;
@@ -177,7 +177,7 @@ export interface OpenOptions extends ProjectOptions {
    * Opens the project with the editor UI partially hidden (known as “zen mode”).
    *
    * Defaults to `false`.
-   * 
+   *
    * @since 1.9.0
    */
   zenMode?: boolean;
