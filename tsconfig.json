@@ -3,8 +3,8 @@
     "module": "esnext",
     "moduleResolution": "node",
     "allowSyntheticDefaultImports": true,
-    "target": "es2018",
-    "lib": ["es2018", "DOM", "DOM.Iterable"],
+    "target": "es2020",
+    "lib": ["es2022", "DOM"],
     "strict": true,
     "outDir": "./temp/tsc"
   },

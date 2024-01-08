@@ -67,10 +67,10 @@ export function openTarget(options?: OpenOptions) {
 }
 
 function setFrameDimensions(frame: HTMLIFrameElement, options: EmbedOptions = {}) {
-  const height: string = Object.hasOwnProperty.call(options, 'height')
+  const height: string = Object.hasOwn(options, 'height')
     ? `${options.height}`
     : `${DEFAULT_FRAME_HEIGHT}`;
-  const width: string | undefined = Object.hasOwnProperty.call(options, 'width')
+  const width: string | undefined = Object.hasOwn(options, 'width')
     ? `${options.width}`
     : undefined;
 

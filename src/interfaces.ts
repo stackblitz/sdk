@@ -185,11 +185,11 @@ export interface OpenOptions extends ProjectOptions {
 
 export interface EmbedOptions extends ProjectOptions {
   /**
-   * Height of the embed iframe
+   * Height of the embed iframe (defaults to `300`).
    */
   height?: number | string;
   /**
-   * Width of the embed iframe (defaults to `100%`)
+   * Width of the embed iframe (defaults to `100%`).
    */
   width?: number | string;
   /**

@@ -59,7 +59,7 @@ export const generators: Record<keyof ParamOptions, (value: any) => string> = {
 export function buildParams(options: ParamOptions = {}): string {
   const params: string[] = Object.entries(options)
     .map(([key, value]) => {
-      if (value != null && generators.hasOwnProperty(key)) {
+      if (value != null && Object.hasOwn(generators, key)) {
         return generators[key as keyof ParamOptions](value);
       }
       return '';
