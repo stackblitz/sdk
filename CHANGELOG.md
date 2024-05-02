@@ -1,5 +1,8 @@
 # @stackblitz/sdk changelog
 
+## v1.10.0 (2024-05-03)
+- Added support for `organization` in `ProjectOptions`
+
 ## v1.9.0 (2023-04-04)
 
 - Moved the StackBlitz SDK to a dedicated repository: https://github.com/stackblitz/sdk.
