@@ -123,6 +123,15 @@ export interface ProjectOptions {
    */
   origin?: string;
   /**
+   * Set the organization where you want to run the project.
+   *
+   * Defaults to no organization.
+   */
+  organization?: {
+    provider: 'github';
+    name: string;
+  }
+  /**
    * Show the sidebar as open or closed on page load.
    *
    * This might be ignored on narrow viewport widths (mobile and/or tablets).
@@ -134,7 +143,7 @@ export interface ProjectOptions {
    * Choose the sidebar view to open on project load.
    *
    * Available views: `project` (default), `search`, `ports` (WebContainers only) and `settings`.
-   * 
+   *
    * @since 1.9.0
    */
   sidebarView?: UiSidebarView;
@@ -153,7 +162,7 @@ export interface ProjectOptions {
    *     startScript: 'build,serve'
    *
    * Defaults to looking for a `dev` script or a `start` script. Ignored in EngineBlock projects.
-   * 
+   *
    * @since 1.9.0
    */
   startScript?: string;
@@ -190,7 +199,7 @@ export interface OpenOptions extends ProjectOptions {
    * Opens the project with the editor UI partially hidden (known as “zen mode”).
    *
    * Defaults to `false`.
-   * 
+   *
    * @since 1.9.0
    */
   zenMode?: boolean;

@@ -36,7 +36,9 @@ type ParamName =
   | 'terminalHeight'
   | 'theme'
   | 'view'
-  | 'zenMode';
+  | 'zenMode'
+  | 'orgName'
+  | 'orgProvider';
 
 export const generators: Record<keyof ParamOptions, (value: any) => string> = {
   clickToLoad: (value: ParamOptions['clickToLoad']) => trueParam('ctl', value),
@@ -54,6 +56,7 @@ export const generators: Record<keyof ParamOptions, (value: any) => string> = {
   theme: (value: ParamOptions['theme']) => enumParam('theme', value, UI_THEMES),
   view: (value: ParamOptions['view']) => enumParam('view', value, UI_VIEWS),
   zenMode: (value: ParamOptions['zenMode']) => trueParam('zenMode', value),
+  organization: (value: ParamOptions['organization']) => `${stringParams('orgName', value?.name)}&${stringParams('orgProvider', value?.provider)}`,
 };
 
 export function buildParams(options: ParamOptions = {}): string {
