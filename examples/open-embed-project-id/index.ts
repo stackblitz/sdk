@@ -11,7 +11,7 @@ function openProject() {
   });
 }
 
-//  This replaces the HTML element with
+// This replaces the HTML element with
 // the id of "embed" with https://stackblitz.com/edit/css-custom-prop-color-values embedded in an iframe.
 function embedProject() {
   sdk.embedProjectId('embed', 'css-custom-prop-color-values', {
