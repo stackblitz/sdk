@@ -46,6 +46,7 @@ export function replaceAndEmbed(
     frame.className = target.className;
   }
   setFrameDimensions(frame, options);
+  setFrameAllowList(target, frame, options);
   target.replaceWith(frame);
 }
 
@@ -79,5 +80,21 @@ function setFrameDimensions(frame: HTMLIFrameElement, options: EmbedOptions = {}
     frame.setAttribute('width', width);
   } else {
     frame.setAttribute('style', 'width:100%;');
+  }
+}
+
+function setFrameAllowList(
+  target: HTMLElement & { allow?: string },
+  frame: HTMLIFrameElement,
+  options: EmbedOptions = {}
+) {
+  const allowList = target.allow?.split(';')?.map((key) => key.trim()) ?? [];
+
+  if (options.crossOriginIsolated && !allowList.includes('cross-origin-isolated')) {
+    allowList.push('cross-origin-isolated');
+  }
+
+  if (allowList.length > 0) {
+    frame.allow = allowList.join('; ');
   }
 }

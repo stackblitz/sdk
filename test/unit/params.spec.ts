@@ -92,6 +92,7 @@ describe('buildParams', () => {
       theme: 'default',
       view: 'default',
       zenMode: false,
+      crossOriginIsolated: false,
     };
     // Check that we are testing all options
     expect(Object.keys(options).sort()).toStrictEqual(Object.keys(generators).sort());
@@ -108,7 +109,7 @@ describe('buildParams', () => {
       hideExplorer: true,
       hideNavigation: true,
       openFile: ['src/index.js,src/styles.css', 'package.json'],
-      organization: {name: 'stackblitz', provider: 'github'},
+      organization: { name: 'stackblitz', provider: 'github' },
       showSidebar: true,
       sidebarView: 'search',
       startScript: 'dev:serve',
@@ -116,6 +117,7 @@ describe('buildParams', () => {
       theme: 'light',
       view: 'preview',
       zenMode: true,
+      crossOriginIsolated: true,
     };
     // Check that we are testing all options
     expect(Object.keys(options).sort()).toStrictEqual(Object.keys(generators).sort());
@@ -140,6 +142,7 @@ describe('buildParams', () => {
         'theme=light',
         'view=preview',
         'zenMode=1',
+        'corp=1',
       ].sort()
     );
   });

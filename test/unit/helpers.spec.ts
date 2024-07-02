@@ -16,9 +16,14 @@ describe('embedUrl', () => {
   });
 
   test('turns config into URL query parameters', () => {
-    expect(embedUrl('/edit/test', { clickToLoad: true, openFile: 'index.js', theme: 'dark' })).toBe(
-      'https://stackblitz.com/edit/test?embed=1&ctl=1&file=index.js&theme=dark'
-    );
+    expect(
+      embedUrl('/edit/test', {
+        clickToLoad: true,
+        openFile: 'index.js',
+        theme: 'dark',
+        crossOriginIsolated: true,
+      })
+    ).toBe('https://stackblitz.com/edit/test?embed=1&ctl=1&file=index.js&theme=dark&corp=1');
   });
 
   test('allows removing the embed=1 query parameter', () => {
