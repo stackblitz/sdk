@@ -32,7 +32,8 @@
     "start:e2e": "vite dev --mode e2e",
     "test": "vitest run --mode test --coverage",
     "test:unit": "vitest run --mode test",
-    "test:e2e": "npx playwright test"
+    "test:e2e": "npx playwright test",
+    "test:format": "npx prettier --check ."
   },
   "devDependencies": {
     "@playwright/test": "^1.32.2",
