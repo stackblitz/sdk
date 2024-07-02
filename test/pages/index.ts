@@ -1,3 +1,5 @@
 import StackBlitzSDK from '@stackblitz/sdk';
+import testSDK from '$test/server/test-sdk';
 
-(window as any).StackBlitzSDK = StackBlitzSDK;
+window.StackBlitzSDK = StackBlitzSDK;
+window.testSDK = testSDK;

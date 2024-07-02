@@ -30,16 +30,29 @@ interface PendingResolvers {
 export class RDC {
   private port: MessagePort;
   private pending: PendingResolvers = {};
+  private requestTimeout: number;
 
-  constructor(port: MessagePort) {
+  constructor(port: MessagePort, requestTimeout: number) {
     this.port = port;
+    this.requestTimeout = requestTimeout;
     this.port.onmessage = this.messageListener.bind(this);
   }
 
   public request<TResult = null>({ type, payload }: RequestData): Promise<TResult | null> {
     return new Promise((resolve, reject) => {
       const id = genID();
-      this.pending[id] = { resolve, reject };
+      const timeout = setTimeout(() => {
+        this.rejectPending(id, type, 'request timed out')
+      }, this.requestTimeout);
+      this.pending[id] = { 
+        resolve: (result: TResult | null) => {
+          resolve(result);
+          clearTimeout(timeout)
+        },
+        reject: (e: any) => {
+          reject(e);
+          clearTimeout(timeout)
+        } };
       this.port.postMessage({
         type,
         payload: {
@@ -51,6 +64,22 @@ export class RDC {
     });
   }
 
+  private resolvePending(payload: MessagePayloadWithMetadata): void{
+    const id = payload.__reqid;
+
+    if (this.pending[id]) {
+      this.pending[id].resolve(this.cleanResult(payload));
+      delete this.pending[id];
+    }
+  }
+
+  private rejectPending(id: string, type: string, error: string | undefined): void{
+    if (this.pending[id]) {
+      this.pending[id].reject(error ? `${type}: ${error}` : type);
+      delete this.pending[id];
+    }
+  }
+
   private messageListener(event: MessageEvent<MessageData>) {
     if (typeof event.data.payload?.__reqid !== 'string') {
       return;
@@ -59,13 +88,10 @@ export class RDC {
     const { type, payload } = event.data;
     const { __reqid: id, __success: success, __error: error } = payload;
 
-    if (this.pending[id]) {
-      if (success) {
-        this.pending[id].resolve(this.cleanResult(payload));
-      } else {
-        this.pending[id].reject(error ? `${type}: ${error}` : type);
-      }
-      delete this.pending[id];
+    if(success){
+      this.resolvePending(payload);
+    }else{
+      this.rejectPending(id, type, error);
     }
   }
 
