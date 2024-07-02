@@ -1,5 +1,10 @@
 # @stackblitz/sdk changelog
 
+## v1.11.0 (2024-07-02)
+
+- Add cross-origin isolation flag (https://github.com/stackblitz/sdk/pull/20)
+- Fix and test format (https://github.com/stackblitz/sdk/pull/21)
+
 ## v1.10.0 (2024-05-03)
 
 - Added support for `organization` in `ProjectOptions`
