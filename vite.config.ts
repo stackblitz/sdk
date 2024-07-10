@@ -2,6 +2,7 @@ import ReplacePlugin from '@rollup/plugin-replace';
 import bodyParser from 'body-parser';
 import fs from 'node:fs/promises';
 import path from 'node:path';
+import querystring from 'node:querystring';
 import type { Plugin, UserConfig, ViteDevServer } from 'vite';
 import { defineConfig } from 'vite';
 import TSConfigPaths from 'vite-tsconfig-paths';
@@ -138,6 +139,19 @@ function configureServer(server: ViteDevServer) {
     } else {
       next();
     }
+  });
+
+  server.middlewares.use('/examples', async (req, res, next) => {
+    if (req.url.includes('?')) {
+      const query = querystring.parse(req.url.split('?').pop());
+
+      if (query.corp === '1') {
+        res.setHeader('Cross-Origin-Embedder-Policy', 'require-corp');
+        res.setHeader('Cross-Origin-Opener-Policy', 'same-origin');
+      }
+    }
+
+    next();
   });
 }
 

@@ -1,6 +1,6 @@
 {
   "name": "@stackblitz/sdk",
-  "version": "1.10.0",
+  "version": "1.11.0",
   "description": "SDK for generating and embedding StackBlitz projects.",
   "license": "MIT",
   "author": "Eric Simons",
@@ -32,7 +32,8 @@
     "start:e2e": "vite dev --mode e2e",
     "test": "vitest run --mode test --coverage",
     "test:unit": "vitest run --mode test",
-    "test:e2e": "npx playwright test"
+    "test:e2e": "npx playwright test",
+    "test:format": "npx prettier --check ."
   },
   "devDependencies": {
     "@playwright/test": "^1.32.2",

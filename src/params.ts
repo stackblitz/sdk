@@ -38,7 +38,8 @@ type ParamName =
   | 'view'
   | 'zenMode'
   | 'orgName'
-  | 'orgProvider';
+  | 'orgProvider'
+  | 'corp';
 
 export const generators: Record<keyof ParamOptions, (value: any) => string> = {
   clickToLoad: (value: ParamOptions['clickToLoad']) => trueParam('ctl', value),
@@ -56,7 +57,9 @@ export const generators: Record<keyof ParamOptions, (value: any) => string> = {
   theme: (value: ParamOptions['theme']) => enumParam('theme', value, UI_THEMES),
   view: (value: ParamOptions['view']) => enumParam('view', value, UI_VIEWS),
   zenMode: (value: ParamOptions['zenMode']) => trueParam('zenMode', value),
-  organization: (value: ParamOptions['organization']) => `${stringParams('orgName', value?.name)}&${stringParams('orgProvider', value?.provider)}`,
+  organization: (value: ParamOptions['organization']) =>
+    `${stringParams('orgName', value?.name)}&${stringParams('orgProvider', value?.provider)}`,
+  crossOriginIsolated: (value: ParamOptions['crossOriginIsolated']) => trueParam('corp', value),
 };
 
 export function buildParams(options: ParamOptions = {}): string {

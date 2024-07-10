@@ -130,7 +130,7 @@ export interface ProjectOptions {
   organization?: {
     provider: 'github';
     name: string;
-  }
+  };
   /**
    * Show the sidebar as open or closed on page load.
    *
@@ -218,6 +218,12 @@ export interface EmbedOptions extends ProjectOptions, VMOptions {
    * Hide the preview URL in embeds.
    */
   hideNavigation?: boolean;
+  /**
+   * Load the project with the proper cross-origin isolation headers.
+   *
+   * @see https://blog.stackblitz.com/posts/cross-browser-with-coop-coep/
+   */
+  crossOriginIsolated?: boolean;
 }
 
 export type OpenFileOption = string | string[];
