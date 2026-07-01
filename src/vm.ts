@@ -17,8 +17,9 @@ export interface FsDiff {
 export class VM {
   private _rdc: RDC;
 
-  constructor(port: MessagePort, config: { previewOrigin?: string }) {
-    this._rdc = new RDC(port);
+  constructor(port: MessagePort, config: { previewOrigin?: string, requestTimeout?: number }) {
+    const requestTimeout = typeof config.requestTimeout === 'number' ? config.requestTimeout : 5000;
+    this._rdc = new RDC(port, requestTimeout);
 
     Object.defineProperty(this.preview, 'origin', {
       value: typeof config.previewOrigin === 'string' ? config.previewOrigin : null,

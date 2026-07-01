@@ -62,3 +62,8 @@ export type HandlerContext = AppStateContext & ProjectContext & MessageContext;
 export type HandleRequest = (data: RequestData, context: HandlerContext) => ResponseData;
 
 export type HandleRootRequest = (data: AnyRequestData) => InitResponseData | ResponseData | null;
+
+export interface FailingRequestHandler{
+  makeRequestFail(type: AnyRequestData['type']): void;
+  createHandler(rootRequestHandler: HandleRootRequest): HandleRootRequest
+}
