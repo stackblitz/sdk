@@ -1,9 +1,12 @@
 /** @vitest-environment happy-dom */
 import { afterEach, describe, expect, test } from 'vitest';
 
-import { DEFAULT_FRAME_HEIGHT } from '$src/constants';
+import { DEFAULT_FRAME_HEIGHT, EMBED_ALLOW_FEATURES } from '$src/constants';
 import { embedUrl, findElement, genID, openTarget, openUrl, replaceAndEmbed } from '$src/helpers';
 import { h, makeContainer, removeContainer } from './utils/dom';
+
+/** The default `allow` value: every Permissions Policy feature delegated to any origin. */
+const ALL_FEATURES_ALLOW = EMBED_ALLOW_FEATURES.map((feature) => `${feature} *`).join('; ');
 
 describe('embedUrl', () => {
   test('works with custom origins', () => {
@@ -177,5 +180,64 @@ describe('replaceAndEmbed', () => {
     expect(iframe.getAttribute('height')).toBe('500');
     expect(iframe.getAttribute('width')).toBe('500');
     expect(iframe.getAttribute('style')).toBe(null);
+  });
+
+  test('delegates every Permissions Policy feature to any origin by default', () => {
+    const div = makeContainer().appendChild(h('div'));
+    const iframe = h('iframe', { src: 'about:blank' }) as HTMLIFrameElement;
+
+    replaceAndEmbed(div, iframe);
+
+    expect(iframe.getAttribute('allow')).toBe(ALL_FEATURES_ALLOW);
+    expect(iframe.getAttribute('allow')).toContain('geolocation *');
+  });
+
+  test('delegates cross-origin-isolated to the explicit StackBlitz origin', () => {
+    const div = makeContainer().appendChild(h('div'));
+    const iframe = h('iframe', { src: 'about:blank' }) as HTMLIFrameElement;
+
+    replaceAndEmbed(div, iframe, { crossOriginIsolated: true });
+
+    expect(iframe.getAttribute('allow')).toBe(
+      `${ALL_FEATURES_ALLOW}; cross-origin-isolated https://stackblitz.com`
+    );
+  });
+
+  test('delegates cross-origin-isolated to a custom origin', () => {
+    const div = makeContainer().appendChild(h('div'));
+    const iframe = h('iframe', { src: 'about:blank' }) as HTMLIFrameElement;
+
+    replaceAndEmbed(div, iframe, {
+      crossOriginIsolated: true,
+      origin: 'https://example.com/',
+    });
+
+    expect(iframe.getAttribute('allow')).toBe(
+      `${ALL_FEATURES_ALLOW}; cross-origin-isolated https://example.com`
+    );
+  });
+
+  test('does not duplicate an existing cross-origin-isolated allowlist entry', () => {
+    const div = makeContainer().appendChild(h('div')) as HTMLElement & { allow?: string };
+    div.allow = 'cross-origin-isolated https://example.com';
+    const iframe = h('iframe', { src: 'about:blank' }) as HTMLIFrameElement;
+
+    replaceAndEmbed(div, iframe, { crossOriginIsolated: true });
+
+    expect(iframe.getAttribute('allow')).toBe(
+      `cross-origin-isolated https://example.com; ${ALL_FEATURES_ALLOW}`
+    );
+  });
+
+  test('preserves pre-existing allowlist entries without duplicating features', () => {
+    const div = makeContainer().appendChild(h('div')) as HTMLElement & { allow?: string };
+    div.allow = 'geolocation self';
+    const iframe = h('iframe', { src: 'about:blank' }) as HTMLIFrameElement;
+
+    replaceAndEmbed(div, iframe);
+
+    const allow = iframe.getAttribute('allow') ?? '';
+    expect(allow.startsWith('geolocation self')).toBe(true);
+    expect(allow).not.toContain('geolocation *');
   });
 });
