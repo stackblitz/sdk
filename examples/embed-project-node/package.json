@@ -1,0 +1,9 @@
+{
+  "name": "sdk-example-embed-project-node",
+  "description": "Demo of the StackBlitz SDK's embedProject method for creating a dynamic WebContainers (node) project",
+  "version": "0.0.0",
+  "private": true,
+  "dependencies": {
+    "@stackblitz/sdk": "^1.8.1"
+  }
+}

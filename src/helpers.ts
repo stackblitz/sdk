@@ -1,5 +1,5 @@
 import type { EmbedOptions, OpenOptions } from './interfaces';
-import { DEFAULT_FRAME_HEIGHT, DEFAULT_ORIGIN } from './constants';
+import { DEFAULT_FRAME_HEIGHT, DEFAULT_ORIGIN, EMBED_ALLOW_FEATURES } from './constants';
 import { buildParams } from './params';
 
 type Route = '/run' | `/edit/${string}` | `/github/${string}` | `/fork/${string}`;
@@ -88,13 +88,73 @@ function setFrameAllowList(
   frame: HTMLIFrameElement,
   options: EmbedOptions = {}
 ) {
-  const allowList = target.allow?.split(';')?.map((key) => key.trim()) ?? [];
+  const allowList =
+    target.allow
+      ?.split(';')
+      ?.map((key) => key.trim())
+      .filter(Boolean) ?? [];
 
-  if (options.crossOriginIsolated && !allowList.includes('cross-origin-isolated')) {
-    allowList.push('cross-origin-isolated');
+  const declaredFeatures = new Set(allowList.map((entry) => entry.split(/\s+/)[0]));
+
+  /**
+   * Delegate every Permissions Policy feature to any origin (`feature *`) so
+   * the embedded document and any (cross-origin) iframes it nests — e.g. project
+   * previews — can use them. A feature only reaches a nested frame if each
+   * ancestor frame was granted it, so the outer embed frame must delegate it.
+   */
+  for (const feature of getDelegatableFeatures()) {
+    if (!declaredFeatures.has(feature)) {
+      allowList.push(`${feature} *`);
+      declaredFeatures.add(feature);
+    }
+  }
+
+  if (options.crossOriginIsolated && !declaredFeatures.has('cross-origin-isolated')) {
+    /**
+     * Delegate the `cross-origin-isolated` permission to the StackBlitz origin
+     * explicitly. A bare `cross-origin-isolated` token is scoped to the iframe's
+     * `src` origin, but `embedProject` creates the frame without a `src` and only
+     * navigates to StackBlitz cross-origin via a form POST, so the permission
+     * would never reach the embedded document. Naming the origin makes it apply
+     * regardless of how the frame is populated. It also does not accept the `*`
+     * allowlist value, which is why it is handled separately here.
+     */
+    allowList.push(`cross-origin-isolated ${getOrigin(options)}`);
+    declaredFeatures.add('cross-origin-isolated');
   }
 
   if (allowList.length > 0) {
     frame.allow = allowList.join('; ');
   }
+}
+
+/**
+ * The set of Permissions Policy features to delegate to the embed frame.
+ *
+ * When available, the browser's own list of features currently allowed in this
+ * document (`document.featurePolicy.allowedFeatures()`) is used so we pick up
+ * any features the browser supports without maintaining them by hand. That API
+ * is non-standard and Chromium-only, so it is unioned with `EMBED_ALLOW_FEATURES`
+ * as a fallback for browsers (Firefox, Safari) that don't implement it.
+ *
+ * `cross-origin-isolated` is removed because it does not accept the `*`
+ * allowlist value and is delegated separately to the StackBlitz origin.
+ */
+function getDelegatableFeatures(): string[] {
+  const features = new Set<string>(EMBED_ALLOW_FEATURES);
+
+  try {
+    const policy = (document as any)?.featurePolicy;
+    if (policy && typeof policy.allowedFeatures === 'function') {
+      for (const feature of policy.allowedFeatures() as string[]) {
+        features.add(feature);
+      }
+    }
+  } catch {
+    // Non-standard API; fall back to the static list.
+  }
+
+  features.delete('cross-origin-isolated');
+
+  return [...features];
 }

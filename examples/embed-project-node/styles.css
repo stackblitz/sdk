@@ -1,0 +1,54 @@
+html {
+  height: 100%;
+  text-align: center;
+  font-family: system-ui, sans-serif;
+  color: black;
+  background-color: white;
+}
+
+body {
+  height: 100%;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+h1 {
+  margin: 1rem;
+  font-size: 1.25rem;
+}
+
+nav {
+  margin: 1rem;
+  font-size: 0.9rem;
+}
+
+select,
+button {
+  margin: 0.2em;
+  padding: 0.2em 0.5em;
+  font-size: inherit;
+  font-family: inherit;
+}
+
+#embed {
+  display: flex;
+  flex: 1 1 60%;
+  flex-direction: column;
+  justify-content: center;
+  overflow: hidden;
+  width: 100%;
+  height: auto;
+  margin: 0;
+  border: 0;
+}
+
+#embed > p {
+  width: min(300px, 100%);
+  margin: 2rem auto;
+  padding: 4rem 1rem;
+  border: dashed 2px #ccc;
+  border-radius: 0.5em;
+  font-size: 85%;
+  color: #777;
+}
