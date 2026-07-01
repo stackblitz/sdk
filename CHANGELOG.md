@@ -1,5 +1,9 @@
 # @stackblitz/sdk changelog
 
+## v1.11.1 (2026-07-01)
+
+- fix: allow cross-origin-isolation for the run endpoint (https://github.com/stackblitz/sdk/pull/39)
+
 ## v1.11.0 (2024-07-02)
 
 - Add cross-origin isolation flag (https://github.com/stackblitz/sdk/pull/20)
